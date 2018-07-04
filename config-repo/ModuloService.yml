@@ -1,0 +1,20 @@
+server:
+  port: ${PORT:8081}
+feign:
+  hystrix:
+    enabled: true
+
+security:
+  basic:
+    enabled: false
+  user:
+    password: none
+  oauth2:
+    resource:
+      preferTokenInfo: false
+      userInfoUri: http://localhost:9999/users/current
+
+security:
+  oauth2:
+    resource:
+      userInfoUri: http://security-server:9999/users/current  
