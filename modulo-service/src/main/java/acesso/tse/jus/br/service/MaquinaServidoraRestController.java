@@ -62,7 +62,13 @@ public class MaquinaServidoraRestController {
 	@GetMapping("/cdTrib/{cdTrib}/alias/{alias}")
 	public ResponseEntity<List<MaquinaServidoraResource>> findBycdTribAndalias(@PathVariable Integer cdTrib,@PathVariable String alias) {
 		return new ResponseEntity<>(assembler.toResources(repository.findBycdTribAndalias(cdTrib,alias)), HttpStatus.OK);
+	}
+	
+	@GetMapping("/cdModulo/{cdModulo}")
+	public ResponseEntity<List<MaquinaServidoraResource>> findBycdModulo(@PathVariable Integer cdModulo) {
+		return new ResponseEntity<>(assembler.toResources(repository.findBycdModulo(cdModulo)), HttpStatus.OK);
 	}	
+		
 	
 	@Transactional(timeout = 10)
 	@GetMapping("/{id}")

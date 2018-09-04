@@ -26,7 +26,11 @@ public interface MaquinaServidoraRepository extends JpaRepository<MaquinaServido
 	
 	@RestResource(path="/cdTrib/{cdTrib}/alias/{alias}")	
 	@Query("SELECT a FROM MaquinaServidora a where a.id.cdTrib = :cdTrib and a.id.alias = :alias")
-	List<MaquinaServidora> findBycdTribAndalias(@Param("cdTrib") Integer cdTrib, @Param("alias") String alias);	
+	List<MaquinaServidora> findBycdTribAndalias(@Param("cdTrib") Integer cdTrib, @Param("alias") String alias);
+	
+	@RestResource(path="/cdModulo/{cdModulo}")
+	@Query(value="SELECT MS.* FROM ADMACESSO.MAQUINA_SERVIDORA MS INNER JOIN ADMACESSO.MANUTENCAO M ON ( MS.ALIAS = M.ALIAS AND MS.CD_TRIB = M.CD_TRIB ) WHERE M.CD_MODULO = :cdModulo ORDER BY MS.ALIAS", nativeQuery = true)	
+	List<MaquinaServidora> findBycdModulo(@Param("cdModulo") Integer cdModulo);
 	
 	@Query("SELECT a FROM MaquinaServidora a")
 	List<MaquinaServidora> findAll();		
