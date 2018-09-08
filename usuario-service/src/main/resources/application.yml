@@ -16,9 +16,9 @@ spring:
     hibernate:
       ddl-auto: none  
   datasource:
-    url: jdbc:oracle:thin:@stargate:1521:hadmtse
+    url: jdbc:oracle:thin:@stargate:1521:dadmtse
     username: acesso
-    password: acessosad
+    password: acesso
     driver-class-name: oracle.jdbc.driver.OracleDriver        
       
 eureka:
