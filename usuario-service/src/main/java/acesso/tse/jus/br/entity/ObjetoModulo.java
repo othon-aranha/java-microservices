@@ -25,6 +25,7 @@ import acesso.tse.jus.br.AcessoConstants;
 @SequenceGenerator(name = "sq_objeto_modulo", sequenceName = "admacesso.sq_objeto_modulo", allocationSize = 1)
 public class ObjetoModulo {
 
+	@SuppressWarnings("unused")
 	private static final long	serialVersionUID	= AcessoConstants.VERSAO;
 
 	@Id

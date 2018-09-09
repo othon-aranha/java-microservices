@@ -16,15 +16,11 @@ import javax.persistence.JoinColumn;
 //import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.NamedNativeQuery;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -41,46 +37,46 @@ public class Usuario implements Serializable  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_usuario")
 	@Column(name = "sq_usuario", unique = true)
-	private Integer				id;
+	private Integer	id;
 
 	@Column(name = "cd_usuario", nullable = false)
 	@NotNull
 	@Size(min = 1, max = 64)
-	private String				login;
+	private String	login;
 
 	@Column(name = "nom_usuario")
 	@Size(max = 50)
-	private String				nome;
+	private String	nome;
 
 	@Column(name = "mat_servidor")
 	@Size(max = 8)
-	private String				matriculaServidor;
+	private String	matriculaServidor;
 
 	@Column(name = "mat_func")
 	@Size(max = 8)
-	private String				matriculaFuncionario;
+	private String	matriculaFuncionario;
 
 	@Column(name = "email")
 	@Size(max = 60)
-	private String				email;
+	private String	email;
 
 	@Column(name = "senha")
 	@NotNull
 	@Size(max = 64)
-	private String				senha;
+	private String	senha;
 
 	@Column(name = "nr_cpf")
-	private String				numeroCpf;
+	private String	numeroCpf;
 
 	@Column(name = "st_usuario", nullable = false)
 	@NotNull
 	@Enumerated(EnumType.ORDINAL)
-	private StatusUsuario		status;
+	private StatusUsuario	status;
 
 	@Column(name = "tp_usuario", nullable = false)
 	@NotNull
 	@Enumerated(EnumType.ORDINAL)
-	private TipoUsuario			tipo;
+	private TipoUsuario	tipo;
 	
 	@ManyToMany(mappedBy = "usuarios", fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH })
 	private Set<Modulo>	usuarioModulos;

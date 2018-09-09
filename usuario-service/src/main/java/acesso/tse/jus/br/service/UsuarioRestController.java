@@ -21,9 +21,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import acesso.tse.jus.br.entity.StatusUsuario;
+import acesso.tse.jus.br.entity.TipoUsuario;
 import acesso.tse.jus.br.entity.Usuario;
 import acesso.tse.jus.br.repository.UsuarioRepository;
 import acesso.tse.jus.br.resource.UsuarioResource;
@@ -31,7 +34,7 @@ import acesso.tse.jus.br.resource.UsuarioResource;
 
 
 @RestController
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200"}, allowCredentials="true",  methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
 @RequestMapping("/usuario")
 public class UsuarioRestController {
 
@@ -69,7 +72,7 @@ public class UsuarioRestController {
 		}
 	}	
 	
-	@GetMapping("/usuarios/{sigla}")
+	@GetMapping("/usuarios/siglaModulo/{sigla}")
 	public ResponseEntity<List<UsuarioResource>> findBySiglaModulo(@PathVariable String sigla) {
 		return new ResponseEntity<>(assembler.toResources(repository.findBySiglaModulo(sigla)), HttpStatus.OK);
 	}	
@@ -137,6 +140,15 @@ public class UsuarioRestController {
 		}
 	}
 	
+	@GetMapping("usuarios/tipoUsuario/{tipoUsuario}")
+	public ResponseEntity<List<UsuarioResource>> findBytipo(@PathVariable List<TipoUsuario> tipoUsuario) {		
+		return new ResponseEntity<>(assembler.toResources(repository.findBytipoIn(tipoUsuario)), HttpStatus.OK);		
+	}	
+	
+	@GetMapping("usuarios/tipoUsuario/{tipoUsuario}/status/{status}")
+	public ResponseEntity<List<UsuarioResource>> findBytipoInAndstatusIn(@PathVariable List<TipoUsuario> tipoUsuario, @PathVariable List<StatusUsuario> status) {		
+		return new ResponseEntity<>(assembler.toResources(repository.findBytipoInAndstatusIn(tipoUsuario,status)), HttpStatus.OK);		
+	}	
 	
 	
 }

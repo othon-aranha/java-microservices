@@ -15,6 +15,7 @@ import acesso.tse.jus.br.AcessoConstants;
 @Subselect("SELECT TO_NUMBER(cd_dominio) id, ds_dominio nome FROM admacesso.dominio d WHERE d.no_dominio = 'TP_OBJETO'")
 public class TipoObjeto {
 
+	@SuppressWarnings("unused")
 	private static final long	serialVersionUID	= AcessoConstants.VERSAO;
 
 	@Id

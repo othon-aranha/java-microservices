@@ -12,6 +12,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import acesso.tse.jus.br.entity.StatusUsuario;
+import acesso.tse.jus.br.entity.TipoUsuario;
 import acesso.tse.jus.br.entity.Usuario;
 
 @RepositoryRestResource(path="/usuarios", itemResourceRel="usuario")
@@ -30,15 +32,28 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	@RestResource(path="/matricula")
 	Usuario findBymatriculaServidor(@Param("matricula") String matricula);
 	
-	@RestResource(path="/usuarios/{sigla}")
-	@Query("SELECT a FROM Usuario a INNER JOIN a.usuarioModulos u where UPPER(u.sigla) = ?")
-	List<Usuario> findBySiglaModulo(@Param("sigla") String sigla);
-	
 	@RestResource(path="/login/{login}/senha/{senha}")
 	@Query(value = "SELECT * FROM ADMACESSO.USUARIO WHERE CD_USUARIO = :login AND SENHA = ADMACESSO.PCK_ACESSO_SECURITY.CRIPT(RPAD(LOWER(:senha),32),RPAD(:login,32))", nativeQuery = true)
 	Usuario findByloginAndsenha(@Param("login") String login, @Param("senha") String senha);
+
+	@RestResource(path="usuarios/tipoUsuario/{tipoUsuario}")
+	@Query(nativeQuery = true)
+	List<Usuario> findBytipoIn(@Param("tipoUsuario") List<TipoUsuario> tipoUsuario);
+	
+	@RestResource(path="usuarios/tipoUsuario/{tipoUsuario}/status/{status}")
+	@Query(value = "SELECT * FROM ADMACESSO.USUARIO WHERE TP_USUARIO IN :tipoUsuario AND ST_USUARIO IN :status", nativeQuery = true)
+	List<Usuario> findBytipoInAndstatusIn(@Param("tipoUsuario") List<TipoUsuario> tipoUsuario, @Param("status") List<StatusUsuario> status);
+	/*
+	 @Query(nativeQuery = true)
+	List<Usuario> findBytipoIsInAndstatusIsIn(@Param("tipoUsuario") List<TipoUsuario> tipoUsuario, @Param("status") List<StatusUsuario> status);
+	*/	
+	
 	
 	@RestResource(path="/usuarios")
 	@Query("SELECT a FROM Usuario a")
-	Page<Usuario> findAll(Pageable pageable);		
+	Page<Usuario> findAll(Pageable pageable);
+	
+	@RestResource(path="/usuarios/siglaModulo/{sigla}")
+	@Query("SELECT a FROM Usuario a INNER JOIN a.usuarioModulos u where UPPER(u.sigla) = ?")
+	List<Usuario> findBySiglaModulo(@Param("sigla") String sigla);	
 }
