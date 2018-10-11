@@ -12,6 +12,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import acesso.tse.jus.br.dto.ModuloDTO;
 import acesso.tse.jus.br.entity.Modulo;
 import acesso.tse.jus.br.entity.SimNaoType;
 import acesso.tse.jus.br.entity.StatusModulo;
@@ -19,7 +20,7 @@ import acesso.tse.jus.br.entity.TipoModulo;
 import acesso.tse.jus.br.entity.TipoAtualizacao;
 
 @RepositoryRestResource(path="/modulo", itemResourceRel="modulo")
-public interface ModuloRepository extends JpaRepository<Modulo, Integer> {	
+public interface ModuloRepository extends JpaRepository<Modulo, Integer>, ModuloRepositoryCustom {	
 	@Autowired		
 	JdbcTemplate jdbctemplate = null;	
 		
@@ -49,5 +50,8 @@ public interface ModuloRepository extends JpaRepository<Modulo, Integer> {
 	Page<Modulo> findByLoginUsuario(@Param("login") String login, Pageable pageable);
 
 	@Query("SELECT a FROM Modulo a")
-	List<Modulo> findAll();		
+	List<Modulo> findAll();
+	
+	
+	List<Modulo> moduloByModuloDTO(@Param("modulo") ModuloDTO params);	
 }

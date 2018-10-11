@@ -25,6 +25,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.Gson;
+
+import acesso.tse.jus.br.dto.ModuloDTO;
 import acesso.tse.jus.br.entity.Modulo;
 import acesso.tse.jus.br.entity.SimNaoType;
 import acesso.tse.jus.br.entity.StatusModulo;
@@ -60,6 +63,13 @@ public class ModuloRestController {
 	public ResponseEntity<List<ModuloResource>> getAll() {
 		return new ResponseEntity<>(assembler.toResources(repository.findAll()), HttpStatus.OK);
 	}
+	
+	@PostMapping("/modulos/filtrar")
+	public ResponseEntity<List<ModuloResource>> get(@RequestBody(required=true) String body) {
+		ModuloDTO dto = new Gson().fromJson(body, ModuloDTO.class);
+		return new ResponseEntity<>(assembler.toResources(repository.moduloByModuloDTO(dto)), HttpStatus.OK);
+	}
+	
 	
 	@Transactional(timeout = 10)
 	@GetMapping("/{id}")

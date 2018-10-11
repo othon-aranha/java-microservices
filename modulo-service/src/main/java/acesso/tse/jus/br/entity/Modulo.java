@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -29,6 +30,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import acesso.tse.jus.br.AcessoConstants;
 //import br.net.woodstock.rockframework.domain.persistence.AbstractIntegerEntity;
 
+
+@NamedQuery(name = "Modulo.moduloByModuloDTO", query = "SELECT a FROM Modulo a")
 @NamedNativeQuery(name="findBytipoModulo", query = "SELECT * FROM ADMACESSO.MODULO WHERE TP_MODULO = :tipoModulo ", resultClass = Modulo.class)
 @Entity
 @Table(name = "modulo", schema = "admacesso")
