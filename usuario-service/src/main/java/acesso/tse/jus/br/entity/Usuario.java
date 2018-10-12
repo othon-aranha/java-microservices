@@ -16,15 +16,15 @@ import javax.persistence.JoinColumn;
 //import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
+
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.NamedNativeQuery;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
