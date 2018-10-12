@@ -15,6 +15,7 @@ import acesso.tse.jus.br.AcessoConstants;
 @Table(name = "maquina_servidora", schema = "admacesso")
 public class MaquinaServidora  {
 
+	@SuppressWarnings("unused")
 	private static final long	serialVersionUID	= AcessoConstants.VERSAO;
 
 	@EmbeddedId

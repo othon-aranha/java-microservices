@@ -42,10 +42,13 @@ public class Unidade implements Serializable {
 	@Column(name = "sit_unid", nullable = false)
 	private String				status;
 
-	@OneToOne(optional = true, fetch = FetchType.LAZY)
-	@JoinColumn(name = "cod_unid_super", referencedColumnName = "cd", nullable = true)
-	private Unidade		pai;
-
+	//@OneToOne(optional = true, fetch = FetchType.LAZY)
+	//@JoinColumn(name = "cod_unid_super", referencedColumnName = "cd", nullable = true)
+	//private Unidade		pai;
+	@Column(name = "cod_unid_super", nullable = true)
+	private Integer pai;
+	
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pai")
 	@OrderBy(value = "nome")
 	@Where(clause = "sit_unid = 'C' OR sit_unid LIKE 'O%'")
@@ -55,7 +58,8 @@ public class Unidade implements Serializable {
 		super();
 	}
 
-	public Unidade(Integer id, String sigla, String nome, String status, Unidade pai,
+	/*
+	  public Unidade(Integer id, String sigla, String nome, String status, Unidade pai,
 			Set<Unidade> filhos) {
 		super();
 		this.id = id;
@@ -65,7 +69,20 @@ public class Unidade implements Serializable {
 		this.pai = pai;
 		this.filhos = filhos;
 	}
-
+    */
+	
+	
+	  public Unidade(Integer id, String sigla, String nome, String status, Integer pai,
+			Set<Unidade> filhos) {
+		super();
+		this.id = id;
+		this.sigla = sigla;
+		this.nome = nome;
+		this.status = status;
+		this.pai = pai;
+		this.filhos = filhos;
+	}
+	
 	public Integer getId() {
 		return this.id;
 	}
@@ -92,14 +109,25 @@ public class Unidade implements Serializable {
 	}
 
 	
-	public Unidade getPai() {
+	/*
+	 public Unidade getPai() {
+	 
 		return this.pai;
 	}
 
 	public void setPai(final Unidade pai) {
 		this.pai = pai;
 	}
-    
+    */
+	
+	 public Integer getPai() {
+		 
+		return this.pai;
+	}
+
+	public void setPai(final Integer pai) {
+		this.pai = pai;
+	}	
 	
 	@JsonIgnore
 	public Set<Unidade> getFilhos() {

@@ -18,6 +18,7 @@ import acesso.tse.jus.br.AcessoConstants;
 @Immutable
 public class Servidor {
 
+	@SuppressWarnings("unused")
 	private static final long	serialVersionUID	= AcessoConstants.VERSAO;
 
 	@Id

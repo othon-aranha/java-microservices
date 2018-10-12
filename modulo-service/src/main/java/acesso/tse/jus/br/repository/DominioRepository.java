@@ -1,5 +1,7 @@
 package acesso.tse.jus.br.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,11 @@ public interface DominioRepository extends JpaRepository<Dominio, Integer> {
 	
 	@RestResource(path="/nome")
 	Page<Dominio> findBynomeIgnoreCaseContaining(@Param("nome") String nome, Pageable pageable);	
+
+	
+	@Query("SELECT a FROM Dominio a where UPPER(a.nome) LIKE UPPER(:nome) and UPPER(a.descricao) like UPPER(:descricao)")
+	Page<Dominio> findBynomeAnddescricao(@Param("nome") String nome, @Param("descricao") String descricao, Pageable pageable);	
+	
 	
 	@Query("SELECT a FROM Dominio a")
 	Page<Dominio> findAll(Pageable pageable);		

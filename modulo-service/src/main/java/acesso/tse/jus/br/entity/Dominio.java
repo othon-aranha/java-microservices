@@ -30,12 +30,12 @@ public class Dominio {
 
 	@Column(name = "cd_dominio")
 	@NotNull
-	@Size(min = 3, max = 100)
+	@Size(min = 1, max = 100)
 	private String	cd;
 
 	@Column(name = "ds_dominio")
 	@NotNull
-	@Size(min = 3, max = 100)
+	@Size(min = 1, max = 100)
 	private String	descricao;
 	
 	  

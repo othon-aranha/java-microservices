@@ -81,18 +81,18 @@ public class Usuario implements Serializable  {
 	@NotNull
 	@Enumerated(EnumType.ORDINAL)
 	private TipoUsuario			tipo;
-	
+
 	@ManyToMany(mappedBy = "usuarios", fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH })
 	private Set<Modulo>	usuarioModulos;
-	
+
 	@ManyToOne(optional = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "cd_unidade", referencedColumnName = "cd", nullable = true)
 	private Unidade	unidade;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-	private Set<UsuarioArea>	areas;	
-	
-	/*	
+	private Set<UsuarioArea>	areas;
+
+	/*
 	@ManyToMany(mappedBy = "gerentes", fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH })
 	private Set<Area>			gerenteAreas;
 
@@ -103,17 +103,17 @@ public class Usuario implements Serializable  {
 	@JoinTable(name = "grupo_usuario", schema = "admacesso", joinColumns = @JoinColumn(name = "sq_usuario", referencedColumnName = "sq_usuario"), inverseJoinColumns = @JoinColumn(name = "sq_grupo", referencedColumnName = "sq_grupo"))
 	private Set<Grupo>			grupos;
     */
-	
+
 	public Usuario() {
 		super();
 	}
 
-	
+
 	public Integer getId() {
 		return this.id;
 	}
 
-	
+
 	public Usuario(Integer id, String login, String nome, String matriculaServidor, String matriculaFuncionario,
 			String email, String senha, String numeroCpf, StatusUsuario status, TipoUsuario tipo,
 			Set<Modulo> usuarioModulos, Unidade unidade, Set<UsuarioArea> areas) {
@@ -209,7 +209,7 @@ public class Usuario implements Serializable  {
 	public void setTipo(final TipoUsuario tipo) {
 		this.tipo = tipo;
 	}
-	
+
 	@JsonIgnore
 	public Set<Modulo> getUsuarioModulos() {
 		return this.usuarioModulos;
@@ -218,7 +218,7 @@ public class Usuario implements Serializable  {
 	public void setUsuarioModulos(final Set<Modulo> usuarioModulos) {
 		this.usuarioModulos = usuarioModulos;
 	}
-	
+
 	public Unidade getUnidade() {
 		return this.unidade;
 	}
@@ -226,7 +226,7 @@ public class Usuario implements Serializable  {
 	public void setUnidade(final Unidade unidade) {
 		this.unidade = unidade;
 	}
-	
+
 	@JsonIgnore
 	public Set<UsuarioArea> getAreas() {
 		return this.areas;
@@ -234,7 +234,7 @@ public class Usuario implements Serializable  {
 
 	public void setAreas(final Set<UsuarioArea> areas) {
 		this.areas = areas;
-	}	
+	}
 
 	/*
 	public Set<Area> getGerenteAreas() {

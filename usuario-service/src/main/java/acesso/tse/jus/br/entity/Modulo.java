@@ -1,7 +1,5 @@
 package acesso.tse.jus.br.entity;
 
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
@@ -22,18 +20,16 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.NamedNativeQuery;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import acesso.tse.jus.br.AcessoConstants;
 //import br.net.woodstock.rockframework.domain.persistence.AbstractIntegerEntity;
 
-@NamedNativeQuery(name="findBytipoModulo", query = "SELECT * FROM ADMACESSO.MODULO WHERE TP_MODULO = :tipoModulo ", resultClass = Modulo.class)
 @Entity
 @Table(name = "modulo", schema = "admacesso")
-public class Modulo implements Serializable {
+public class Modulo {
 
+	@SuppressWarnings("unused")
 	private static final long	serialVersionUID				= AcessoConstants.VERSAO;
 
 	public static final int		TIPO_AUTENTICACAO_USUARIO_SENHA	= 1;
@@ -104,7 +100,7 @@ public class Modulo implements Serializable {
 
 	@Column(name = "tabela_mensagem", nullable = false, columnDefinition = "NUMBER")
 	@NotNull
-	private Boolean	mensagemCompartilhada;
+	private Boolean				mensagemCompartilhada;
 
 	@Column(name = "controla_acesso", nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -128,46 +124,20 @@ public class Modulo implements Serializable {
 
 	
 	@ManyToOne(optional = true, fetch = FetchType.EAGER)
-	@JoinColumn(name = "cd_trib", referencedColumnName = "cd_trib", nullable = false)
-	private Tribunal tribunal;
+	@JoinColumn(name = "cd_trib", referencedColumnName = "cd_trib", nullable = true)
+	private Tribunal			tribunal;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "modulo")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "modulo")
 	@OrderBy(value = "nome")
-	private Set<Perfil>	perfis;
+	private Set<Perfil>			perfis;
     
- 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "objeto")
+ 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "modulo")
 	@OrderBy(value = "nome")
-	private Set<ObjetoModulo> objetos;
+	private Set<ObjetoModulo>	objetos;
 	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinTable(name = "acesso_modulo", schema = "admacesso", joinColumns = @JoinColumn(name = "cd_modulo", referencedColumnName = "cd_modulo"), inverseJoinColumns = @JoinColumn(name = "sq_usuario", referencedColumnName = "sq_usuario"))
-	private Set<Usuario> usuarios;
-	
-	//@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
-	//@JoinTable(name = "maquina_servidora", schema = "admacesso", joinColumns = @JoinColumn(name = "cd_modulo", referencedColumnName = "cd_modulo"))
-	//private Set<MaquinaServidora> servidores;	
-	
-	/*
-	  public Set<MaquinaServidora> getServidores() {
-	 
-		return servidores;
-	}
-
-	public void setServidores(Set<MaquinaServidora> servidores) {
-		this.servidores = servidores;
-	}
-	
-	*/
-	
-	@JsonIgnore
-	public Set<Usuario> getUsuarios() {
-		return this.usuarios;
-	}
-
-	public void setUsuarios(final Set<Usuario> usuarios) {
-		this.usuarios = usuarios;
-	}	
-    
+	private Set<Usuario>		usuarios;	
 	
 	public Modulo() {
 		super();
@@ -226,12 +196,10 @@ public class Modulo implements Serializable {
 			String caminhoModulo, String caminhoHelp, String nomeExecutavel, Integer majorVersion, Integer minorVersion,
 			Integer release, Integer build, Date dataModulo, Date dataHelp, Boolean mensagemCompartilhada,
 			SimNaoType controlaAcesso, TipoModulo tipoModulo, TipoAtualizacao tipoAtualizacao,
-			StatusModulo statusModulo, 
-			Tribunal tribunal,			 
+			StatusModulo statusModulo, Tribunal tribunal,
 			Set<ObjetoModulo> objetos,
-			Set<Perfil> perfis,
+			Set<Perfil> perfis, 
 			Set<Usuario> usuarios
-			//Set<MaquinaServidora> servidores
 			) {
 		super();
 		this.id = id;
@@ -255,26 +223,9 @@ public class Modulo implements Serializable {
 		this.tipoAtualizacao = tipoAtualizacao;
 		this.statusModulo = statusModulo;
 		this.tribunal = tribunal;
-		
 		this.objetos = objetos;
 		this.perfis = perfis;
 		this.usuarios = usuarios;
-		//this.servidores = servidores;
-	}
-	
-	public String getVersao() {
-		if ( this.getTipoAtualizacao() == TipoAtualizacao.POR_VERSAO ) { 
-			return this.getMajorVersion().toString().concat(".").concat(this.getMinorVersion().toString()).concat(".").concat(this.getRelease().toString()).concat(".").concat(this.getBuild().toString());}
-		else {			
-			Date g = this.getDataModulo();
-			if ( g != null ) {
-			SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
-			return f.format(g);
-			}else {
-				return "";
-			}
-		}
-		
 	}
 
 	public void setNome(final String nome) {
@@ -377,6 +328,32 @@ public class Modulo implements Serializable {
 		this.dataHelp = dataHelp;
 	}
 
+	/*
+	public String getChave() {
+		return this.chave;
+	}
+
+	public void setChave(final String chave) {
+		this.chave = chave;
+	}
+
+	public Integer getTipoAutenticacao() {
+		return this.tipoAutenticacao;
+	}
+
+	public void setTipoAutenticacao(final Integer tipoAutenticacao) {
+		this.tipoAutenticacao = tipoAutenticacao;
+	}
+
+	public Boolean getMensagemCompartilhada() {
+		return this.mensagemCompartilhada;
+	}
+
+	public void setMensagemCompartilhada(final Boolean mensagemCompartilhada) {
+		this.mensagemCompartilhada = mensagemCompartilhada;
+	}
+    */
+	
 	public SimNaoType getControlaAcesso() {
 		return this.controlaAcesso;
 	}
@@ -417,8 +394,6 @@ public class Modulo implements Serializable {
 	public void setTribunal(final Tribunal tribunal) {
 		this.tribunal = tribunal;
 	}
-	
-	
 
 	@JsonIgnore
 	public Set<Perfil> getPerfis() {
@@ -427,8 +402,7 @@ public class Modulo implements Serializable {
 
 	public void setPerfis(final Set<Perfil> perfis) {
 		this.perfis = perfis;
-	}	
-
+	}
 	
 	@JsonIgnore
 	public Set<ObjetoModulo> getObjetos() {
@@ -439,13 +413,13 @@ public class Modulo implements Serializable {
 		this.objetos = objetos;
 	}
 	
-	public Boolean getMensagemCompartilhada() {
-		return mensagemCompartilhada;
+	@JsonIgnore
+	public Set<Usuario> getUsuarios() {
+		return this.usuarios;
 	}
 
-	public void setMensagemCompartilhada(Boolean mensagemCompartilhada) {
-		this.mensagemCompartilhada = mensagemCompartilhada;
+	public void setUsuarios(final Set<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
-	
     
 }

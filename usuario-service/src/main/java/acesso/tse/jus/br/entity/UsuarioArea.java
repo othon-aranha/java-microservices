@@ -26,28 +26,29 @@ import acesso.tse.jus.br.AcessoConstants;
 @SequenceGenerator(name = "sq_usuario_area", sequenceName = "admacesso.sq_usuario_area", allocationSize = 1)
 public class UsuarioArea {
 
+	@SuppressWarnings("unused")
 	private static final long	serialVersionUID	= AcessoConstants.VERSAO;
 
 	@Id
 	@Column(name = "sq_usuario_area", unique = true)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_usuario_area")
-	private Integer	id;
+	private Integer				id;
 
 	@Column(name = "st_default", nullable = false, columnDefinition = "CHAR")
 	@Enumerated(EnumType.STRING)
-	private SimNaoType		padrao;
+	private SimNaoType			padrao;
 
 	@ManyToOne(optional = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "cd_unidade", referencedColumnName = "sq_secao_orgao", nullable = true)
-	private Area	area;
+	private Area				area;
 
 	@ManyToOne(optional = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "sq_usuario", referencedColumnName = "sq_usuario", nullable = true)
-	private Usuario	usuario;
+	private Usuario				usuario;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinTable(name = "usu_area_perfil", schema = "admacesso", joinColumns = @JoinColumn(name = "sq_usuario_area", referencedColumnName = "sq_usuario_area"), inverseJoinColumns = @JoinColumn(name = "cd_perfil", referencedColumnName = "cd_perfil"))
-	private Set<Perfil>	perfis;
+	private Set<Perfil>			perfis;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinTable(name = "usu_area_objeto", schema = "admacesso", joinColumns = @JoinColumn(name = "sq_usuario_area", referencedColumnName = "sq_usuario_area"), inverseJoinColumns = @JoinColumn(name = "sq_objeto_modulo", referencedColumnName = "sq_objeto_modulo"))

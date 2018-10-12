@@ -25,6 +25,7 @@ import acesso.tse.jus.br.AcessoConstants;
 @Table(name = "secao_orgao", schema = "admsadp")
 public class Area {
 
+	@SuppressWarnings("unused")
 	private static final long	serialVersionUID	= AcessoConstants.VERSAO;
 
 	@Id
