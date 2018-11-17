@@ -3,7 +3,10 @@ package acesso.tse.jus.br.service;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
+import java.util.List;
+
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
+import org.springframework.http.HttpStatus;
 
 import acesso.tse.jus.br.entity.Modulo;
 import acesso.tse.jus.br.resource.ModuloResource;

@@ -10,5 +10,5 @@ import acesso.tse.jus.br.entity.Modulo;
 
 
 public interface ModuloRepositoryCustom  {		
-	public List<Modulo> moduloByModuloDTO(@Param("modulo") ModuloDTO params);
+	public List<Modulo> moduloByModuloDTO(ModuloDTO modulo);
 }

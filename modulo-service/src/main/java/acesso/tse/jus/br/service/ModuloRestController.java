@@ -10,6 +10,7 @@ import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 //import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +33,7 @@ import acesso.tse.jus.br.entity.Modulo;
 import acesso.tse.jus.br.entity.SimNaoType;
 import acesso.tse.jus.br.entity.StatusModulo;
 import acesso.tse.jus.br.entity.TipoModulo;
+import acesso.tse.jus.br.impl.ModuloRepositoryCustomImpl;
 import acesso.tse.jus.br.entity.TipoAtualizacao;
 import acesso.tse.jus.br.repository.ModuloRepository;
 import acesso.tse.jus.br.resource.ModuloResource;
@@ -62,12 +64,14 @@ public class ModuloRestController {
 	@GetMapping("/modulos")
 	public ResponseEntity<List<ModuloResource>> getAll() {
 		return new ResponseEntity<>(assembler.toResources(repository.findAll()), HttpStatus.OK);
-	}
+	}	
 	
 	@PostMapping("/modulos/filtrar")
 	public ResponseEntity<List<ModuloResource>> get(@RequestBody(required=true) String body) {
-		ModuloDTO dto = new Gson().fromJson(body, ModuloDTO.class);
-		return new ResponseEntity<>(assembler.toResources(repository.moduloByModuloDTO(dto)), HttpStatus.OK);
+		ModuloDTO modulo = new Gson().fromJson(body, ModuloDTO.class);
+		new ModuloRepositoryCustomImpl();
+		Specification<Modulo> spec = ModuloRepositoryCustomImpl.moduloByModuloDTO(modulo);
+		return new ResponseEntity<>(assembler.toResources(repository.findAll(spec)), HttpStatus.OK);
 	}
 	
 	

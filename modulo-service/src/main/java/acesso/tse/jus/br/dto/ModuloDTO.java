@@ -34,10 +34,10 @@ public class ModuloDTO implements Serializable {
 	public List<TipoModulo>			tipoModulo;
 
 	@Enumerated(EnumType.STRING)
-	private TipoAtualizacao		tipoAtualizacao;
+	private List<TipoAtualizacao>		tipoAtualizacao;
 
 	@Enumerated(EnumType.ORDINAL)
-	private StatusModulo		statusModulo;	
+	public List<StatusModulo>		statusModulo;	
 
 
 	public String getSigla() {
@@ -80,19 +80,19 @@ public class ModuloDTO implements Serializable {
 		this.tipoModulo = tipoModulo;
 	}
 
-	public TipoAtualizacao getTipoAtualizacao() {
+	public List<TipoAtualizacao> getTipoAtualizacao() {
 		return tipoAtualizacao;
 	}
 
-	public void setTipoAtualizacao(TipoAtualizacao tipoAtualizacao) {
+	public void setTipoAtualizacao(List<TipoAtualizacao> tipoAtualizacao) {
 		this.tipoAtualizacao = tipoAtualizacao;
 	}
 
-	public StatusModulo getStatusModulo() {
+	public List<StatusModulo> getStatusModulo() {
 		return statusModulo;
 	}
 
-	public void setStatusModulo(StatusModulo statusModulo) {
+	public void setStatusModulo(List<StatusModulo> statusModulo) {
 		this.statusModulo = statusModulo;
 	}
 
