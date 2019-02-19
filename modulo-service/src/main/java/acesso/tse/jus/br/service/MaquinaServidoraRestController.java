@@ -61,8 +61,8 @@ public class MaquinaServidoraRestController {
 	}	
 	
 	@GetMapping("/cdTrib/{cdTrib}/alias/{alias}")
-	public ResponseEntity<List<MaquinaServidoraResource>> findBycdTribAndalias(@PathVariable Integer cdTrib,@PathVariable String alias) {
-		return new ResponseEntity<>(assembler.toResources(repository.findBycdTribAndalias(cdTrib,alias)), HttpStatus.OK);
+	public ResponseEntity<MaquinaServidoraResource> findBycdTribAndalias(@PathVariable Integer cdTrib,@PathVariable String alias) {
+		return new ResponseEntity<MaquinaServidoraResource>(assembler.toResource(repository.findBycdTribAndalias(cdTrib,alias)), HttpStatus.OK);
 	}
 	
 	@GetMapping("/cdModulo/{cdModulo}")
@@ -71,16 +71,18 @@ public class MaquinaServidoraRestController {
 	}	
 		
 	
-	@Transactional(timeout = 10)
-	@GetMapping("/{id}")
-	public ResponseEntity<MaquinaServidoraResource> get(@PathVariable MaquinaServidoraPK maquinaServidoraPK) {
-		MaquinaServidora maquinaServidora = repository.findOne(maquinaServidoraPK);
+	/*
+	 @Transactional(timeout = 10)	 
+	@GetMapping("/cdTrib/{cdTrib}/alias/{alias}")
+	public ResponseEntity<MaquinaServidoraResource> get(@PathVariable Integer cdTrib,@PathVariable String alias) {
+		MaquinaServidora maquinaServidora = repository.findBycdTribAndalias(cdTrib,alias);
 		if (maquinaServidora != null) {			
 			return new ResponseEntity<>(assembler.toResource(maquinaServidora), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+	*/
 		
 	
 	@Transactional(timeout = 10)
@@ -95,9 +97,9 @@ public class MaquinaServidoraRestController {
 	}
 	
 	@Transactional(timeout = 10)
-	@PutMapping("/{id}")
-	public ResponseEntity<MaquinaServidoraResource> update(@PathVariable MaquinaServidoraPK id, @RequestBody MaquinaServidora maquinaServidora) {
-		MaquinaServidora pmaquinaServidora = repository.findOne(id); 
+	@PutMapping("/cdTrib/{cdTrib}/alias/{alias}")
+	public ResponseEntity<MaquinaServidoraResource> update(@PathVariable Integer cdTrib,@PathVariable String alias, @RequestBody MaquinaServidora maquinaServidora) {
+		MaquinaServidora pmaquinaServidora = repository.findBycdTribAndalias(cdTrib,alias); 
 		if ( pmaquinaServidora != null) {
 			maquinaServidora.setId(pmaquinaServidora.getId()); 
 			pmaquinaServidora = repository.save(maquinaServidora);
@@ -108,9 +110,9 @@ public class MaquinaServidoraRestController {
 	}
 	
 	@Transactional(timeout = 10)
-	@DeleteMapping("/{id}")
-	public ResponseEntity<MaquinaServidoraResource> delete(@PathVariable MaquinaServidoraPK id) {
-		MaquinaServidora maquinaServidora = repository.findOne(id);
+	@DeleteMapping("/cdTrib/{cdTrib}/alias/{alias}")
+	public ResponseEntity<MaquinaServidoraResource> delete(@PathVariable Integer cdTrib,@PathVariable String alias) {
+		MaquinaServidora maquinaServidora = repository.findBycdTribAndalias(cdTrib,alias);
 		if (maquinaServidora != null) {
 			repository.delete(maquinaServidora);
 			return new ResponseEntity<>(assembler.toResource(maquinaServidora), HttpStatus.OK);

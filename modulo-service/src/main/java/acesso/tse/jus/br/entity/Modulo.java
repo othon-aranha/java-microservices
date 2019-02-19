@@ -68,6 +68,18 @@ public class Modulo implements Serializable {
 	@Column(name = "esquema")
 	@Size(max = 30)
 	private String				esquema;
+	
+	@Column(name="email_responsavel")
+	@Size(max = 250)
+	private String email;
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	@Column(name = "caminho_modulo")
 	@Size(max = 1000)
@@ -130,7 +142,7 @@ public class Modulo implements Serializable {
 	private StatusModulo		statusModulo;
 
 	
-	@ManyToOne(optional = true, fetch = FetchType.EAGER)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "cd_trib", referencedColumnName = "cd_trib", nullable = false)
 	private Tribunal tribunal;
 
@@ -201,41 +213,12 @@ public class Modulo implements Serializable {
 			String caminhoModulo, String caminhoHelp, String nomeExecutavel, Integer majorVersion, Integer minorVersion,
 			Integer release, Integer build, Date dataModulo, Date dataHelp, 
 			Boolean mensagemCompartilhada, SimNaoType controlaAcesso, TipoModulo tipoModulo,
-			TipoAtualizacao tipoAtualizacao, StatusModulo statusModulo) {
-		super();
-		this.id = id;
-		this.sigla = sigla;
-		this.nome = nome;
-		this.descricao = descricao;
-		this.alias = alias;
-		this.esquema = esquema;
-		this.caminhoModulo = caminhoModulo;
-		this.caminhoHelp = caminhoHelp;
-		this.nomeExecutavel = nomeExecutavel;
-		this.majorVersion = majorVersion;
-		this.minorVersion = minorVersion;
-		this.release = release;
-		this.build = build;
-		this.dataModulo = dataModulo;
-		this.dataHelp = dataHelp;
-		this.mensagemCompartilhada = mensagemCompartilhada;
-		this.controlaAcesso = controlaAcesso;
-		this.tipoModulo = tipoModulo;
-		this.tipoAtualizacao = tipoAtualizacao;
-		this.statusModulo = statusModulo;
-	}
-
-	public Modulo(Integer id, String sigla, String nome, String descricao, String alias, String esquema,
-			String caminhoModulo, String caminhoHelp, String nomeExecutavel, Integer majorVersion, Integer minorVersion,
-			Integer release, Integer build, Date dataModulo, Date dataHelp, Boolean mensagemCompartilhada,
-			SimNaoType controlaAcesso, TipoModulo tipoModulo, TipoAtualizacao tipoAtualizacao,
-			StatusModulo statusModulo, 
+			TipoAtualizacao tipoAtualizacao, StatusModulo statusModulo, 
 			Tribunal tribunal,			 
 			Set<ObjetoModulo> objetos,
 			Set<Perfil> perfis,
-			Set<Usuario> usuarios
-			//Set<MaquinaServidora> servidores
-			) {
+			Set<Usuario> usuarios) {
+			//Set<MaquinaServidora> servidores) {
 		super();
 		this.id = id;
 		this.sigla = sigla;
@@ -262,8 +245,10 @@ public class Modulo implements Serializable {
 		this.objetos = objetos;
 		this.perfis = perfis;
 		this.usuarios = usuarios;
-		//this.servidores = servidores;
+		//this.servidores = servidores;		
+		
 	}
+
 	
 	public String getVersao() {
 		if ( this.getTipoAtualizacao() == TipoAtualizacao.POR_VERSAO ) { 

@@ -111,5 +111,16 @@ public class TribunalRestController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+
+	@GetMapping("/local")
+	public ResponseEntity<TribunalResource> findByacesso() {
+		Tribunal tribunal = repository.findByacesso("*");
+		if (tribunal != null) {			
+			return new ResponseEntity<>(assembler.toResource(tribunal), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}	
+	
 	
 }

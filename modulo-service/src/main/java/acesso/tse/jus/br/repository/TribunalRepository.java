@@ -23,7 +23,10 @@ public interface TribunalRepository extends JpaRepository<Tribunal, Integer> {
 	Tribunal findOne(@Param("id") Integer id);
 	
 	@RestResource(path="/sigla")
-	Tribunal findBysigla(@Param("sigla") String sigla);	
+	Tribunal findBysigla(@Param("sigla") String sigla);
+	
+	@RestResource(path="/acesso")
+	Tribunal findByacesso(@Param("acesso") String acesso);	
 	
 	@Query("SELECT a FROM Tribunal a")
 	Page<Tribunal> findAll(Pageable pageable);		

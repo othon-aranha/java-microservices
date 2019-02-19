@@ -26,6 +26,7 @@ public interface ModuloRepository extends JpaRepository<Modulo, Integer>, JpaSpe
 	JdbcTemplate jdbctemplate = null;	
 		
 	@RestResource(path="/id")
+	@Query("SELECT a FROM Modulo a INNER JOIN a.tribunal t where t.acesso = '*' and a.id = :id")
 	Modulo findOne(@Param("id") Integer id);
 	
 	@RestResource(path="/sigla")
@@ -47,9 +48,10 @@ public interface ModuloRepository extends JpaRepository<Modulo, Integer>, JpaSpe
 	@Query(nativeQuery = true)
 	List<Modulo> findBycontrolaAcesso(@Param("controlaAcesso") SimNaoType controlaAcesso);
 	
-	@Query("SELECT a FROM Modulo a INNER JOIN a.usuarios u where UPPER(u.login) like UPPER(:login)")
+	@Query("SELECT a FROM Modulo a INNER JOIN a.usuarios u INNER JOIN a.tribunal t where t.acesso = '*' and UPPER(u.login) like UPPER(:login)")
 	Page<Modulo> findByLoginUsuario(@Param("login") String login, Pageable pageable);
 
+	@Query("SELECT a FROM Modulo a INNER JOIN a.tribunal t where t.acesso = '*'")
 	List<Modulo> findAll(Specification<Modulo> spec);	
 		
 }
