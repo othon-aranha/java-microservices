@@ -1,5 +1,6 @@
 package acesso.tse.jus.br.service;
 
+
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -7,6 +8,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,10 +62,15 @@ public class MaquinaServidoraRestController {
 		return new ResponseEntity<>(assembler.toResources(repository.findBycdTrib(cdTrib)), HttpStatus.OK);
 	}	
 	
-	@GetMapping("/cdTrib/{cdTrib}/alias/{alias}")
+	@GetMapping("/cdTrib/{cdTrib}/alias/{alias:.+}")
 	public ResponseEntity<MaquinaServidoraResource> findBycdTribAndalias(@PathVariable Integer cdTrib,@PathVariable String alias) {
 		return new ResponseEntity<MaquinaServidoraResource>(assembler.toResource(repository.findBycdTribAndalias(cdTrib,alias)), HttpStatus.OK);
 	}
+	
+	@GetMapping("/alias/{alias:.+}")
+	public ResponseEntity<List<MaquinaServidoraResource>> findAlias(@PathVariable String alias) {
+		return new ResponseEntity<>(assembler.toResources(repository.findAlias('%' + alias + '%' )), HttpStatus.OK);
+	}	
 	
 	@GetMapping("/cdModulo/{cdModulo}")
 	public ResponseEntity<List<MaquinaServidoraResource>> findBycdModulo(@PathVariable Integer cdModulo) {

@@ -34,4 +34,8 @@ public interface MaquinaServidoraRepository extends JpaRepository<MaquinaServido
 	
 	@Query("SELECT a FROM MaquinaServidora a inner join a.id order by a.id.alias")
 	List<MaquinaServidora> findAll();		
+	
+	@RestResource(path="/alias/{alias}")
+	@Query(value="SELECT MS.* FROM ADMACESSO.MAQUINA_SERVIDORA MS INNER JOIN ADMACESSO.TRIBUNAL T ON ( MS.CD_TRIB = T.CD_TRIB ) WHERE T.ACESSO = '*' AND MS.ALIAS LIKE :alias ORDER BY MS.ALIAS", nativeQuery = true)
+	List<MaquinaServidora> findAlias(@Param("alias") String nome);	
 }
