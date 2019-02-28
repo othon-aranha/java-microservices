@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,10 +25,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.Gson;
+
+
+import acesso.tse.jus.br.dto.UsuarioDTO;
+
 import acesso.tse.jus.br.entity.StatusUsuario;
 import acesso.tse.jus.br.entity.TipoUsuario;
 import acesso.tse.jus.br.entity.Usuario;
+
+import acesso.tse.jus.br.impl.UsuarioRepositoryCustomImpl;
 import acesso.tse.jus.br.repository.UsuarioRepository;
+
 import acesso.tse.jus.br.resource.UsuarioResource;
 
 
@@ -59,6 +68,15 @@ public class UsuarioRestController {
 	@GetMapping("/usuarios")
 	public ResponseEntity<List<UsuarioResource>> getAll() {
 		return new ResponseEntity<>(assembler.toResources(repository.findAll()), HttpStatus.OK);
+	}
+	
+	
+	@PostMapping("/usuarios/filtrar")
+	public ResponseEntity<List<UsuarioResource>> get(@RequestBody(required=true) String body) {
+		UsuarioDTO usuario = new Gson().fromJson(body, UsuarioDTO.class);
+		new UsuarioRepositoryCustomImpl();
+		Specification<Usuario> spec = UsuarioRepositoryCustomImpl.usuarioByUsuarioDTO(usuario);
+		return new ResponseEntity<>(assembler.toResources(repository.findAll(spec)), HttpStatus.OK);
 	}
 	
 	@GetMapping("/login/{login}/senha/{senha}")
