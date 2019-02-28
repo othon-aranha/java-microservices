@@ -36,7 +36,7 @@ public class Perfil implements Serializable  {
 	private String				nome;
     
 	
-	@ManyToOne(optional = true, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.REFRESH })
 	@JoinColumn(name = "cd_modulo", referencedColumnName = "cd_modulo", nullable = false)
 	private Modulo	modulo;
 
@@ -51,16 +51,26 @@ public class Perfil implements Serializable  {
 		super();
 	}
 
-	public Perfil(String id, String nome, Modulo modulo, Set<UsuarioArea> usuarios,
+	public Perfil(String id, String nome, Integer cdModulo, Modulo modulo, Set<UsuarioArea> usuarios,
 			Set<ObjetoModulo> objetos
 			) {
 		super();
 		this.id = id;
-		this.nome = nome;		
+		this.nome = nome;
+		// this.cdModulo = cdModulo;
 		this.modulo = modulo;
 		this.usuarios = usuarios;
 		this.objetos = objetos;
 	}
+	
+	/* public Integer getCdModulo() {
+		return cdModulo;
+	}
+
+	public void setCdModulo(Integer cdModulo) {
+		this.cdModulo = cdModulo;
+	}
+	*/
 
 	public String getId() {
 		return this.id;
@@ -79,7 +89,7 @@ public class Perfil implements Serializable  {
 		this.nome = nome;
 	}
 
-	@JsonIgnore
+	
 	public Modulo getModulo() {
 		return this.modulo;
 	}

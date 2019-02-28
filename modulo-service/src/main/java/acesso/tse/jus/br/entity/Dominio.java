@@ -1,5 +1,7 @@
 package acesso.tse.jus.br.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +16,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "dominio", schema = "admacesso")
 @SequenceGenerator(name = "sq_dominio", sequenceName = "admacesso.sq_dominio", allocationSize = 1)
-public class Dominio {
+public class Dominio implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

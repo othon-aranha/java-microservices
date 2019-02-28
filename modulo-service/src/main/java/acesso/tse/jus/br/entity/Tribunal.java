@@ -1,5 +1,7 @@
 package acesso.tse.jus.br.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,7 +16,7 @@ import acesso.tse.jus.br.AcessoConstants;
 
 @Entity
 @Table(name = "tribunal", schema = "admacesso")
-public class Tribunal  {
+public class Tribunal implements Serializable  {
 
 	private static final long serialVersionUID = 1L;
 

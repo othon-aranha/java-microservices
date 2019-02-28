@@ -1,5 +1,6 @@
 package acesso.tse.jus.br.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -23,7 +24,7 @@ import acesso.tse.jus.br.AcessoConstants;
 
 @Entity
 @Table(name = "secao_orgao", schema = "admsadp")
-public class Area {
+public class Area implements Serializable {
 
 	private static final long	serialVersionUID	= AcessoConstants.VERSAO;
 
@@ -53,7 +54,7 @@ public class Area {
 	@Enumerated(EnumType.ORDINAL)
 	private TipoArea			tipo;
 
-	@ManyToOne(optional = true, fetch = FetchType.EAGER)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "sq_secao_sup", referencedColumnName = "sq_secao_orgao", nullable = true)
 	private Area				pai;
 

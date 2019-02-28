@@ -30,6 +30,6 @@ public interface PerfilRepository extends JpaRepository<Perfil, String> {
 	List<Perfil> findBySiglaModulo(@Param("sigla") String sigla);	
 	
 	@RestResource(path="/perfis")
-	@Query("SELECT a FROM Perfil a")
+	@Query("SELECT a FROM Perfil a INNER JOIN a.modulo m")
 	Page<Perfil> findAll(Pageable pageable);		
 }

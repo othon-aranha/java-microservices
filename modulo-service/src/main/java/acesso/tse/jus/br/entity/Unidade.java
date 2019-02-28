@@ -1,5 +1,6 @@
 package acesso.tse.jus.br.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -21,7 +22,7 @@ import acesso.tse.jus.br.AcessoConstants;
 
 @Entity
 @Table(name = "vw_unidade_tse", schema = "admacesso")
-public class Unidade {
+public class Unidade implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

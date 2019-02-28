@@ -1,5 +1,6 @@
 package acesso.tse.jus.br.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -23,7 +24,7 @@ import acesso.tse.jus.br.AcessoConstants;
 @Entity
 @Table(name = "objeto_modulo", schema = "admacesso")
 @SequenceGenerator(name = "sq_objeto_modulo", sequenceName = "admacesso.sq_objeto_modulo", allocationSize = 1)
-public class ObjetoModulo {
+public class ObjetoModulo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

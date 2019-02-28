@@ -1,5 +1,7 @@
 package acesso.tse.jus.br.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,7 +14,7 @@ import acesso.tse.jus.br.AcessoConstants;
 
 @Entity
 @Subselect("SELECT TO_NUMBER(cd_dominio) id, ds_dominio nome FROM admacesso.dominio d WHERE d.no_dominio = 'SITUACAO_FUNCIONAL'")
-public class StatusServidor  {
+public class StatusServidor implements Serializable  {
 
 	private static final long serialVersionUID = 1L;
 

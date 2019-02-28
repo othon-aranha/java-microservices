@@ -142,15 +142,15 @@ public class Modulo implements Serializable {
 	private StatusModulo		statusModulo;
 
 	
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "cd_trib", referencedColumnName = "cd_trib", nullable = false)
 	private Tribunal tribunal;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "modulo")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "modulo")	
 	@OrderBy(value = "nome")
 	private Set<Perfil>	perfis;
     
- 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "objeto")
+ 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "objeto")
 	@OrderBy(value = "nome")
 	private Set<ObjetoModulo> objetos;
 	

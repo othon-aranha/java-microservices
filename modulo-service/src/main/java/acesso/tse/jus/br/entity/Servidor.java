@@ -1,5 +1,7 @@
 package acesso.tse.jus.br.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,13 +12,13 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Immutable;
 
-import acesso.tse.jus.br.AcessoConstants;
+// import acesso.tse.jus.br.AcessoConstants;
 //import br.net.woodstock.rockframework.domain.persistence.AbstractStringEntity;
 
 @Entity
 @Table(name = "servidor", schema = "srh2")
 @Immutable
-public class Servidor {
+public class Servidor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

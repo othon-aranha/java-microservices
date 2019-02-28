@@ -1,5 +1,6 @@
 package acesso.tse.jus.br.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 
@@ -22,7 +23,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "usuario", schema = "admacesso")
 @SequenceGenerator(name = "sq_usuario", sequenceName = "admacesso.sq_usuario", allocationSize = 1)
-public class Usuario  {
+public class Usuario implements Serializable  {
 
 	private static final long serialVersionUID = 1L;
 
