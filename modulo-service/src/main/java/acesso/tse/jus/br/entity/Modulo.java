@@ -142,7 +142,7 @@ public class Modulo implements Serializable {
 	private StatusModulo		statusModulo;
 
 	
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)	
 	@JoinColumn(name = "cd_trib", referencedColumnName = "cd_trib", nullable = false)
 	private Tribunal tribunal;
 

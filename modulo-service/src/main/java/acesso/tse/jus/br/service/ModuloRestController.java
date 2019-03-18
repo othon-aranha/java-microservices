@@ -75,7 +75,7 @@ public class ModuloRestController {
 	}
 	
 	
-	@Transactional(timeout = 10)
+	@Transactional(timeout = 100)
 	@GetMapping("/{id}")
 	public ResponseEntity<ModuloResource> get(@PathVariable Integer id) {
 		Modulo modulo = repository.findOne(id);
@@ -86,7 +86,7 @@ public class ModuloRestController {
 		}
 	}
 	
-	@Transactional(timeout = 10)
+	@Transactional(timeout = 100)
 	@PostMapping
 	public ResponseEntity<ModuloResource> create(@RequestBody Modulo modulo) {
 		modulo = repository.save(modulo);
@@ -97,7 +97,7 @@ public class ModuloRestController {
 		}
 	}
 	
-	@Transactional(timeout = 10)
+	@Transactional(timeout = 100)
 	@PutMapping("/{id}")
 	public ResponseEntity<ModuloResource> update(@PathVariable Integer id, @RequestBody Modulo modulo) {
 		Modulo pmodulo = repository.findOne(id); 
@@ -110,7 +110,7 @@ public class ModuloRestController {
 		}
 	}
 	
-	@Transactional(timeout = 10)
+	@Transactional(timeout = 100)
 	@DeleteMapping("/{id}")
 	public ResponseEntity<ModuloResource> delete(@PathVariable Integer id) {
 		Modulo modulo = repository.findOne(id);
