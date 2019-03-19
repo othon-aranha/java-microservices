@@ -163,7 +163,7 @@ public class UsuarioRestController {
 	}	
 	
 	@GetMapping("usuarios/tipoUsuario/{tipoUsuario}/status/{status}")
-	public ResponseEntity<List<UsuarioResource>> findBytipoInAndstatusIn(@PathVariable List<TipoUsuario> tipoUsuario, @PathVariable List<StatusUsuario> status) {		
+	public ResponseEntity<List<UsuarioResource>> findBytipoInAndstatusIn(@PathVariable List<TipoUsuario> tipoUsuario, @PathVariable List<StatusUsuario> status) {
 		return new ResponseEntity<>(assembler.toResources(repository.findBytipoInAndstatusIn(tipoUsuario,status)), HttpStatus.OK);		
 	}	
 	
