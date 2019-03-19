@@ -11,21 +11,20 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import acesso.tse.jus.br.entity.Manutencao;
-import acesso.tse.jus.br.entity.ManutencaoKey;
 
 @RepositoryRestResource(path="/manutencao", itemResourceRel="manutencao")
-public interface ManutencaoRepository extends JpaRepository<Manutencao, ManutencaoKey> {	
+public interface ManutencaoRepository extends JpaRepository<Manutencao, Integer> {	
 	@Autowired		
 	JdbcTemplate jdbctemplate = null;	
 		
-	Manutencao findOne(@Param("id") ManutencaoKey id);
+	Manutencao findOne(@Param("id") Integer id);
 	
 	@RestResource(path="/idModulo/{idModulo}")	
 	@Query("SELECT a FROM Manutencao a where a.id.modulo.id = :idModulo")
 	List<Manutencao> findBycdTrib(@Param("idModulo") Integer idModulo);
 	
 	@RestResource(path="/sigla/{sigla}")	
-	@Query("SELECT a FROM Manutencao a inner join a.id.modulo m where m.sigla = :sigla")
+	@Query("SELECT a FROM Manutencao a inner join a.modulo m  where m.sigla = :sigla")
 	List<Manutencao> findBysigla(@Param("sigla") String sigla);	
 
 	

@@ -26,5 +26,8 @@ public interface TribunalRepository extends JpaRepository<Tribunal, Integer> {
 	Tribunal findBysigla(@Param("sigla") String sigla);	
 	
 	@Query("SELECT a FROM Tribunal a")
-	Page<Tribunal> findAll(Pageable pageable);		
+	Page<Tribunal> findAll(Pageable pageable);
+	
+	@Query("SELECT a FROM Tribunal a where a.acesso = '*'")
+	Tribunal findTribunalLocal();
 }

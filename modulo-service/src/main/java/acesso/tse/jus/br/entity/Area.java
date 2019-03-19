@@ -47,24 +47,24 @@ public class Area {
 	private Boolean				zona;
 
 	@Column(name = "nr_zona", nullable = false, columnDefinition = "NUMBER")
-	private Integer				numeroZona;
+	private Integer		numeroZona;
 
 	@Column(name = "tp_secao", nullable = false)
 	@Enumerated(EnumType.ORDINAL)
-	private TipoArea			tipo;
+	private TipoArea	tipo;
 
-	@ManyToOne(optional = true, fetch = FetchType.EAGER)
+	@ManyToOne(optional = true, fetch = FetchType.LAZY)
 	@JoinColumn(name = "sq_secao_sup", referencedColumnName = "sq_secao_orgao", nullable = true)
-	private Area				pai;
+	private Area	pai;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pai")
+	/* @OneToMany(fetch = FetchType.LAZY, mappedBy = "pai")
 	@OrderBy(value = "nome")
 	@Where(clause = "st_ativo = 1")
-	private Set<Area>			filhos;
+	private Set<Area>	filhos; */
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
-	@JoinTable(name = "vw_gerente_area", schema = "admacesso", joinColumns = @JoinColumn(name = "sq_secao_orgao", referencedColumnName = "sq_secao_orgao"), inverseJoinColumns = @JoinColumn(name = "sq_usuario", referencedColumnName = "sq_usuario"))
-	private Set<Usuario>		gerentes;
+	@JoinTable(name = "GERENTE_MODULO", schema = "admacesso", joinColumns = @JoinColumn(name = "sq_secao_orgao", referencedColumnName = "sq_secao_orgao"), inverseJoinColumns = @JoinColumn(name = "sq_usuario", referencedColumnName = "sq_usuario"))
+	private Set<Usuario> gerentes; 
 
 	public Area() {
 		super();
@@ -79,7 +79,8 @@ public class Area {
 	}
 
 	public Area(Integer id, String sigla, String nome, String email, Boolean status, Boolean zona, Integer numeroZona,
-			TipoArea tipo, Area pai, Set<Area> filhos, Set<Usuario> gerentes) {
+			TipoArea tipo, Area pai, Set<Area> filhos) {
+			//, Set<Usuario> gerentes) {
 		super();
 		this.id = id;
 		this.sigla = sigla;
@@ -90,8 +91,8 @@ public class Area {
 		this.numeroZona = numeroZona;
 		this.tipo = tipo;
 		this.pai = pai;
-		this.filhos = filhos;
-		this.gerentes = gerentes;
+		// this.filhos = filhos;
+		// this.gerentes = gerentes;
 	}
 
 	public String getSigla() {
@@ -158,20 +159,20 @@ public class Area {
 		this.pai = pai;
 	}
 
-	public Set<Area> getFilhos() {
+	/* public Set<Area> getFilhos() {
 		return this.filhos;
 	}
 
 	public void setFilhos(final Set<Area> filhos) {
 		this.filhos = filhos;
-	}
+	}*/
 
-	public Set<Usuario> getGerentes() {
+	/* public Set<Usuario> getGerentes() {
 		return this.gerentes;
 	}
 
 	public void setGerentes(final Set<Usuario> gerentes) {
 		this.gerentes = gerentes;
-	}
+	}*/
 
 }

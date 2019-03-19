@@ -4,13 +4,17 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import acesso.tse.jus.br.AcessoConstants;
@@ -20,9 +24,21 @@ import acesso.tse.jus.br.AcessoConstants;
 public class Manutencao implements Serializable {
 
 	private static final long	serialVersionUID	= AcessoConstants.VERSAO;
-
-	@EmbeddedId
-	private ManutencaoKey id;
+	
+	@Id
+	@NotNull
+	@Column(name = "sq_manutencao", nullable = false)
+	private Integer	id;
+	
+	@ManyToOne(optional = true, fetch = FetchType.EAGER)
+	@JoinColumn(name = "sq_maquina_servidora", referencedColumnName = "sq_maquina_servidora", nullable = false)
+	private MaquinaServidora maquinaServidora;
+	
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "cd_modulo", referencedColumnName = "cd_modulo", nullable = false)
+	@NotNull
+	private Modulo	modulo;
+	
 
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
@@ -52,7 +68,7 @@ public class Manutencao implements Serializable {
 	@Size(max = 30)
 	private String				instancia;
 
-	public Manutencao(ManutencaoKey id, StatusManutencao status, Date dataManutencao, String mensagemErro,
+	public Manutencao(Integer id, Integer id_manutencao,  StatusManutencao status, Date dataManutencao, String mensagemErro,
 			String versao, String conexao, String maquina, String instancia) {
 		super();
 		this.id = id;
@@ -69,18 +85,12 @@ public class Manutencao implements Serializable {
 		super();
 	}
 
-	public Manutencao(final ManutencaoKey id) {
-		super();
-		this.id = id;
+
+	public Integer getId() {
+		return id;
 	}
 
-	
-	public ManutencaoKey getId() {
-		return this.id;
-	}
-
-	
-	public void setId(final ManutencaoKey id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

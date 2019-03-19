@@ -58,6 +58,11 @@ public class TribunalRestController {
 		return new ResponseEntity<>(assembler.toResources(repository.findAll()), HttpStatus.OK);
 	}
 	
+	@GetMapping("/local")
+	public ResponseEntity<TribunalResource> get() {
+		return new ResponseEntity<>(assembler.toResource(repository.findTribunalLocal()), HttpStatus.OK);
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<TribunalResource> get(@PathVariable Integer id) {
 		Tribunal tribunal = repository.findOne(id);

@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import acesso.tse.jus.br.entity.Manutencao;
-import acesso.tse.jus.br.entity.ManutencaoKey;
 import acesso.tse.jus.br.repository.ManutencaoRepository;
 import acesso.tse.jus.br.resource.ManutencaoResource;
 
@@ -64,8 +63,8 @@ public class ManutencaoRestController {
 	
 	@Transactional(timeout = 10)
 	@GetMapping("/{id}")
-	public ResponseEntity<ManutencaoResource> get(@PathVariable ManutencaoKey manutencaoKey) {
-		Manutencao pmanutencao = repository.findOne(manutencaoKey);
+	public ResponseEntity<ManutencaoResource> get(@PathVariable Integer id) {
+		Manutencao pmanutencao = repository.findOne(id);
 		if (pmanutencao != null) {			
 			return new ResponseEntity<>(assembler.toResource(pmanutencao), HttpStatus.OK);
 		} else {
@@ -87,7 +86,7 @@ public class ManutencaoRestController {
 	
 	@Transactional(timeout = 10)
 	@PutMapping("/{id}")
-	public ResponseEntity<ManutencaoResource> update(@PathVariable ManutencaoKey id, @RequestBody Manutencao Manutencao) {
+	public ResponseEntity<ManutencaoResource> update(@PathVariable Integer id, @RequestBody Manutencao Manutencao) {
 		Manutencao pManutencao = repository.findOne(id); 
 		if ( pManutencao != null) {
 			Manutencao.setId(pManutencao.getId()); 
@@ -100,7 +99,7 @@ public class ManutencaoRestController {
 	
 	@Transactional(timeout = 10)
 	@DeleteMapping("/{id}")
-	public ResponseEntity<ManutencaoResource> delete(@PathVariable ManutencaoKey id) {
+	public ResponseEntity<ManutencaoResource> delete(@PathVariable Integer id) {
 		Manutencao manutencao = repository.findOne(id);
 		if (manutencao != null) {
 			repository.delete(manutencao);

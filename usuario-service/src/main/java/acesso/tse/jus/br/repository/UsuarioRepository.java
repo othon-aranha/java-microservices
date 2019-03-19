@@ -54,6 +54,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	Page<Usuario> findAll(Pageable pageable);
 	
 	@RestResource(path="/usuarios/siglaModulo/{sigla}")
-	@Query("SELECT a FROM Usuario a INNER JOIN a.usuarioModulos u where UPPER(u.sigla) = ?")
+	@Query("SELECT a FROM Usuario a INNER JOIN a.usuarioModulos u where UPPER(u.sigla) = :sigla")
 	List<Usuario> findBySiglaModulo(@Param("sigla") String sigla);	
 }

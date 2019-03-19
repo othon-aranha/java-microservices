@@ -41,7 +41,7 @@ public interface ModuloRepository extends JpaRepository<Modulo, Integer>, JpaSpe
 	
 	@RestResource(path="/statusModulo")
 	@Query(nativeQuery = true)
-	List<Modulo> findBystatusModulo(@Param("statusModulo") StatusModulo statusModulo);
+	List<Modulo> findBystatusModuloIn(@Param("statusModulo") List<StatusModulo> statusModulo);
 	
 	@RestResource(path="/controlaAcesso")
 	@Query(nativeQuery = true)

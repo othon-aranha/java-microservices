@@ -2,9 +2,14 @@ package acesso.tse.jus.br.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import javax.validation.constraints.NotNull;
@@ -19,8 +24,20 @@ public class MaquinaServidora implements Serializable  {
 
 	private static final long	serialVersionUID	= AcessoConstants.VERSAO;
 
-	@EmbeddedId
-	private MaquinaServidoraPK	id;
+	@Id
+	@NotNull
+	@Column(name = "sq_maquina_servidora", nullable = false)
+	private Integer	id;
+	
+	@ManyToOne(optional = true, fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+	@JoinColumn(name = "cd_trib", referencedColumnName = "cd_trib", nullable = false)
+	@NotNull
+	private Tribunal tribunal;
+	
+	@Column(name = "alias")
+	@NotNull
+	@Size(min = 1, max = 20)
+	private String				alias;
 
 	@Column(name = "descricao", nullable = false)
 	@NotNull
@@ -41,18 +58,52 @@ public class MaquinaServidora implements Serializable  {
 	@Size(max = 2000)
 	private String	conexao;
 	
+	public MaquinaServidora(Integer id, Tribunal tribunal, String alias, String descricao, String usuario, String senha,
+			String conexao) {
+		super();
+		this.id = id;
+		this.tribunal = tribunal;
+		this.alias = alias;
+		this.descricao = descricao;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.conexao = conexao;
+	}
+
+
+	public Tribunal getTribunal() {
+		return tribunal;
+	}
+
+
+	public void setTribunal(Tribunal tribunal) {
+		this.tribunal = tribunal;
+	}
+
+
+	public String getAlias() {
+		return alias;
+	}
+
+
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+
+
+	public Integer getId() {
+		return id;
+	}
+
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 	public MaquinaServidora() {
 		super();
 	}
 
-	public MaquinaServidoraPK getId() {
-		return this.id;
-	}
-
-	
-	public void setId(final MaquinaServidoraPK id) {
-		this.id = id;
-	}
 
 	public String getDescricao() {
 		return this.descricao;

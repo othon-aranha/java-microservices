@@ -134,8 +134,8 @@ public class ModuloRestController {
 	}	
 	
 	@GetMapping("/statusModulo/{statusModulo}")
-	public ResponseEntity<List<ModuloResource>> findBystatusModulo(@PathVariable StatusModulo statusModulo) {
-		return new ResponseEntity<>(assembler.toResources(repository.findBystatusModulo(statusModulo)), HttpStatus.OK);	
+	public ResponseEntity<List<ModuloResource>> findBystatusModulo(@PathVariable List<StatusModulo> statusModulo) {
+		return new ResponseEntity<>(assembler.toResources(repository.findBystatusModuloIn(statusModulo)), HttpStatus.OK);	
 	}
 
 	@GetMapping("/controlaAcesso/{controlaAcesso}")

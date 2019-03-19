@@ -98,12 +98,24 @@ public class Modulo implements Serializable {
 
 	@Column(name = "dt_hlp")
 	private Date				dataHelp;
+	
+	@Column(name = "email_responsavel")
+	@Size(max = 50)
+	private String	email;
 
 	//@Column(name = "nm_chave")
 	//private String				chave;
 
 	//@Column(name = "tp_autenticacao")
 	//private Integer				tipoAutenticacao;
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	@Column(name = "tabela_mensagem", nullable = false, columnDefinition = "NUMBER")
 	@NotNull
@@ -197,7 +209,7 @@ public class Modulo implements Serializable {
 		return this.nome;
 	}
 
-	public Modulo(Integer id, String sigla, String nome, String descricao, String alias, String esquema,
+	public Modulo(Integer id, String sigla, String nome, String descricao, String alias, String esquema, String email,
 			String caminhoModulo, String caminhoHelp, String nomeExecutavel, Integer majorVersion, Integer minorVersion,
 			Integer release, Integer build, Date dataModulo, Date dataHelp, 
 			Boolean mensagemCompartilhada, SimNaoType controlaAcesso, TipoModulo tipoModulo,
@@ -209,6 +221,7 @@ public class Modulo implements Serializable {
 		this.descricao = descricao;
 		this.alias = alias;
 		this.esquema = esquema;
+		this.email = email;
 		this.caminhoModulo = caminhoModulo;
 		this.caminhoHelp = caminhoHelp;
 		this.nomeExecutavel = nomeExecutavel;
@@ -225,7 +238,7 @@ public class Modulo implements Serializable {
 		this.statusModulo = statusModulo;
 	}
 
-	public Modulo(Integer id, String sigla, String nome, String descricao, String alias, String esquema,
+	public Modulo(Integer id, String sigla, String nome, String descricao, String alias, String esquema, String email,
 			String caminhoModulo, String caminhoHelp, String nomeExecutavel, Integer majorVersion, Integer minorVersion,
 			Integer release, Integer build, Date dataModulo, Date dataHelp, Boolean mensagemCompartilhada,
 			SimNaoType controlaAcesso, TipoModulo tipoModulo, TipoAtualizacao tipoAtualizacao,
@@ -243,6 +256,7 @@ public class Modulo implements Serializable {
 		this.descricao = descricao;
 		this.alias = alias;
 		this.esquema = esquema;
+		this.email = email;
 		this.caminhoModulo = caminhoModulo;
 		this.caminhoHelp = caminhoHelp;
 		this.nomeExecutavel = nomeExecutavel;

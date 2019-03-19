@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,14 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import acesso.tse.jus.br.entity.MaquinaServidora;
-import acesso.tse.jus.br.entity.MaquinaServidoraPK;
 import acesso.tse.jus.br.repository.MaquinaServidoraRepository;
 import acesso.tse.jus.br.resource.MaquinaServidoraResource;
 
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
+@CrossOrigin(origins = {"http://localhost:4200"}, methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
 @RequestMapping("/alias")
 public class MaquinaServidoraRestController {
 
@@ -60,9 +60,9 @@ public class MaquinaServidoraRestController {
 		return new ResponseEntity<>(assembler.toResources(repository.findBycdTrib(cdTrib)), HttpStatus.OK);
 	}	
 	
-	@GetMapping("/cdTrib/{cdTrib}/alias/{alias}")
-	public ResponseEntity<List<MaquinaServidoraResource>> findBycdTribAndalias(@PathVariable Integer cdTrib,@PathVariable String alias) {
-		return new ResponseEntity<>(assembler.toResources(repository.findBycdTribAndalias(cdTrib,alias)), HttpStatus.OK);
+	@GetMapping("/alias/{alias}")
+	public ResponseEntity<List<MaquinaServidoraResource>> findBycdTribAndalias(@PathVariable String alias, Pageable pageable) {
+		return new ResponseEntity<>(assembler.toResources(repository.findByaliasIgnoreCaseContaining(alias, pageable)), HttpStatus.OK);
 	}
 	
 	@GetMapping("/cdModulo/{cdModulo}")
@@ -71,10 +71,10 @@ public class MaquinaServidoraRestController {
 	}	
 		
 	
-	@Transactional(timeout = 10)
+	@Transactional(timeout = 100)
 	@GetMapping("/{id}")
-	public ResponseEntity<MaquinaServidoraResource> get(@PathVariable MaquinaServidoraPK maquinaServidoraPK) {
-		MaquinaServidora maquinaServidora = repository.findOne(maquinaServidoraPK);
+	public ResponseEntity<MaquinaServidoraResource> get(@PathVariable Integer id) {
+		MaquinaServidora maquinaServidora = repository.findOne(id);
 		if (maquinaServidora != null) {			
 			return new ResponseEntity<>(assembler.toResource(maquinaServidora), HttpStatus.OK);
 		} else {
@@ -83,7 +83,7 @@ public class MaquinaServidoraRestController {
 	}
 		
 	
-	@Transactional(timeout = 10)
+	@Transactional(timeout = 100)
 	@PostMapping
 	public ResponseEntity<MaquinaServidoraResource> create(@RequestBody MaquinaServidora maquinaServidora) {
 		maquinaServidora = repository.save(maquinaServidora);
@@ -94,9 +94,9 @@ public class MaquinaServidoraRestController {
 		}
 	}
 	
-	@Transactional(timeout = 10)
+	@Transactional(timeout = 100)
 	@PutMapping("/{id}")
-	public ResponseEntity<MaquinaServidoraResource> update(@PathVariable MaquinaServidoraPK id, @RequestBody MaquinaServidora maquinaServidora) {
+	public ResponseEntity<MaquinaServidoraResource> update(@PathVariable Integer id, @RequestBody MaquinaServidora maquinaServidora) {
 		MaquinaServidora pmaquinaServidora = repository.findOne(id); 
 		if ( pmaquinaServidora != null) {
 			maquinaServidora.setId(pmaquinaServidora.getId()); 
@@ -107,9 +107,9 @@ public class MaquinaServidoraRestController {
 		}
 	}
 	
-	@Transactional(timeout = 10)
+	@Transactional(timeout = 100)
 	@DeleteMapping("/{id}")
-	public ResponseEntity<MaquinaServidoraResource> delete(@PathVariable MaquinaServidoraPK id) {
+	public ResponseEntity<MaquinaServidoraResource> delete(@PathVariable Integer id) {
 		MaquinaServidora maquinaServidora = repository.findOne(id);
 		if (maquinaServidora != null) {
 			repository.delete(maquinaServidora);

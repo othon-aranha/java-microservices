@@ -29,11 +29,11 @@ public class Perfil implements Serializable  {
 	@Id
 	@Column(name = "cd_perfil", unique = true)
 	@Size(min = 2, max = 30)
-	private String				id;
+	private String	id;
 
 	@Column(name = "ds_perfil")
 	@Size(max = 50)
-	private String				nome;
+	private String	nome;
     
 	
 	@ManyToOne(optional = true, fetch = FetchType.EAGER)
