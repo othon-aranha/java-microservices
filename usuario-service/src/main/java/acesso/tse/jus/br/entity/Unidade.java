@@ -28,7 +28,7 @@ public class Unidade implements Serializable {
 
 	@Id
 	@Column(name = "cd", unique = true)
-	private Integer				id;
+	private Integer	id;
 
 	@Column(name = "sigla_unid_tse", nullable = false)
 	private String				sigla;

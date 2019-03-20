@@ -23,7 +23,7 @@ public class Servidor {
 
 	@Id
 	@Column(name = "mat_servidor", unique = true)
-	private String				id;
+	private String	id;
 
 	@Column(name = "nom", nullable = false)
 	private String				nome;
@@ -37,14 +37,38 @@ public class Servidor {
 	@Column(name = "num_cpf")
 	private String				numeroCpf;
 
-	@ManyToOne(optional = true, fetch = FetchType.EAGER)
-	@JoinColumn(name = "cd_si_func", referencedColumnName = "id", nullable = true)
-	private StatusServidor		status;
+	// @ManyToOne(optional = true, fetch = FetchType.EAGER)
+	// @JoinColumn(name = "cd_si_func", referencedColumnName = "id", nullable = true)
+	//private StatusServidor		status;
+	
+	@Column(name = "cd_si_func")
+	private Integer idSituFuncional;
 
-	@ManyToOne(optional = true, fetch = FetchType.EAGER)
-	@JoinColumn(name = "unid_lot", referencedColumnName = "cd", nullable = true)
-	private Unidade				unidade;
+	public Integer getIdSituFuncional() {
+		return idSituFuncional;
+	}
 
+	public void setIdSituFuncional(Integer idSituFuncional) {
+		this.idSituFuncional = idSituFuncional;
+	}
+
+	// @ManyToOne(optional = true, fetch = FetchType.EAGER)
+	// @JoinColumn(name = "unid_lot", referencedColumnName = "cd", nullable = true)
+	@Column(name = "unid_lot")
+	private Integer		idUnidade;
+
+	public Servidor(String id, String nome, String email, String matricula, String numeroCpf, StatusServidor status,
+			Integer idUnidade) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.email = email;
+		this.matricula = matricula;
+		this.numeroCpf = numeroCpf;
+		// this.status = status;
+		this.idUnidade = idUnidade;
+	}
+	
 	public Servidor() {
 		super();
 	}
@@ -90,14 +114,23 @@ public class Servidor {
 		this.numeroCpf = numeroCpf;
 	}
 
-	public StatusServidor getStatus() {
+	/*public StatusServidor getStatus() {
 		return this.status;
 	}
 
 	public void setStatus(final StatusServidor status) {
 		this.status = status;
+	}*/
+
+	public Integer getIdUnidade() {
+		return idUnidade;
 	}
 
+	public void setIdUnidade(Integer idUnidade) {
+		this.idUnidade = idUnidade;
+	}
+
+	/*
 	public Unidade getUnidade() {
 		return this.unidade;
 	}
@@ -105,5 +138,6 @@ public class Servidor {
 	public void setUnidade(final Unidade unidade) {
 		this.unidade = unidade;
 	}
+	*/
 
 }
