@@ -42,8 +42,12 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>, JpaS
 	@Query(nativeQuery = true)
 	List<Usuario> findBytipoIn(@Param("tipoUsuario") List<TipoUsuario> tipoUsuario);
 	
+	@RestResource(path="usuarios/status/{status}")
+	@Query("SELECT a FROM Usuario a where status in :status")  
+	List<Usuario> findBystatusIn(@Param("status") List<StatusUsuario> status);
+	
+	
 	@RestResource(path="usuarios/tipoUsuario/{tipoUsuario}/status/{status}")
-	// @Query(value = "SELECT * FROM ADMACESSO.USUARIO WHERE TP_USUARIO IN :tipoUsuario AND ST_USUARIO IN :status", nativeQuery = true)
 	@Query("SELECT a FROM Usuario a where a.tipo in :tipoUsuario and status in :status")  
 	List<Usuario> findBytipoInAndstatusIn(@Param("tipoUsuario") List<TipoUsuario> tipoUsuario, @Param("status") List<StatusUsuario> status);
 	/*

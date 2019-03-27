@@ -12,7 +12,7 @@ spring:
     hibernate:
       ddl-auto: none  
   datasource:
-    url: jdbc:oracle:thin:@stargate:1521:dadmtse
+    url: jdbc:oracle:thin:@localhost:1521:orcl
     username: acesso
     password: acesso
     driver-class-name: oracle.jdbc.driver.OracleDriver              

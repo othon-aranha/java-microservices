@@ -86,7 +86,7 @@ public class Tribunal implements Serializable  {
 
 	@Column(name = "acesso")
 	@Size(max = 1)
-	private String				acesso;
+	private String		acesso;
 
 	public Tribunal() {
 		super();

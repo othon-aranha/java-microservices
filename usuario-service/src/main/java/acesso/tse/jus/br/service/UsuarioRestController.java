@@ -10,9 +10,10 @@ import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.domain.Specification;
+// import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,16 +26,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.google.gson.Gson;
+// import com.google.gson.Gson;
 
 
-import acesso.tse.jus.br.dto.UsuarioDTO;
+// import acesso.tse.jus.br.dto.UsuarioDTO;
 
 import acesso.tse.jus.br.entity.StatusUsuario;
 import acesso.tse.jus.br.entity.TipoUsuario;
 import acesso.tse.jus.br.entity.Usuario;
 
-import acesso.tse.jus.br.impl.UsuarioRepositoryCustomImpl;
+// import acesso.tse.jus.br.impl.UsuarioRepositoryCustomImpl;
 import acesso.tse.jus.br.repository.UsuarioRepository;
 
 import acesso.tse.jus.br.resource.UsuarioResource;
@@ -71,13 +72,16 @@ public class UsuarioRestController {
 	}
 	
 	
-	@PostMapping("/usuarios/filtrar")
+	/*
+	 @PostMapping("/usuarios/filtrar")
+	 
 	public ResponseEntity<List<UsuarioResource>> get(@RequestBody(required=true) String body) {
 		UsuarioDTO usuario = new Gson().fromJson(body, UsuarioDTO.class);
 		new UsuarioRepositoryCustomImpl();
 		Specification<Usuario> spec = UsuarioRepositoryCustomImpl.usuarioByUsuarioDTO(usuario);
 		return new ResponseEntity<>(assembler.toResources(repository.findAll(spec)), HttpStatus.OK);
 	}
+	*/
 	
 	@GetMapping("/login/{login}/senha/{senha}")
 	public ResponseEntity<UsuarioResource> findByloginAndsenha(@PathVariable String login, @PathVariable String senha) {
@@ -104,6 +108,7 @@ public class UsuarioRestController {
 		}
 	}
 	
+	@Transactional(timeout = 100)
 	@PostMapping
 	public ResponseEntity<UsuarioResource> create(@RequestBody Usuario usuario) {
 		usuario = repository.save(usuario);
@@ -114,10 +119,12 @@ public class UsuarioRestController {
 		}
 	}
 	
+	@Transactional(timeout = 100)
 	@PutMapping("/{id}")
 	public ResponseEntity<UsuarioResource> update(@PathVariable Integer id, @RequestBody Usuario usuario) {
 		Usuario pusuario = repository.findOne(id);
 		if (pusuario != null) {
+			pusuario.setUnidade(usuario.getUnidade());
 			usuario.setId(pusuario.getId());
 			pusuario = repository.save(usuario);
 			return new ResponseEntity<>(assembler.toResource(usuario), HttpStatus.OK);
@@ -126,6 +133,7 @@ public class UsuarioRestController {
 		}
 	}
 	
+	@Transactional(timeout = 100)
 	@DeleteMapping("/{id}")
 	public ResponseEntity<UsuarioResource> delete(@PathVariable Integer id) {
 		Usuario usuario = repository.findOne(id);
@@ -161,6 +169,11 @@ public class UsuarioRestController {
 	public ResponseEntity<List<UsuarioResource>> findBytipo(@PathVariable List<TipoUsuario> tipoUsuario) {		
 		return new ResponseEntity<>(assembler.toResources(repository.findBytipoIn(tipoUsuario)), HttpStatus.OK);		
 	}	
+
+	@GetMapping("usuarios/status/{status}")
+	public ResponseEntity<List<UsuarioResource>> findBystatusIn(@PathVariable List<StatusUsuario> status) {
+		return new ResponseEntity<>(assembler.toResources(repository.findBystatusIn(status)), HttpStatus.OK);		
+	}		
 	
 	@GetMapping("usuarios/tipoUsuario/{tipoUsuario}/status/{status}")
 	public ResponseEntity<List<UsuarioResource>> findBytipoInAndstatusIn(@PathVariable List<TipoUsuario> tipoUsuario, @PathVariable List<StatusUsuario> status) {

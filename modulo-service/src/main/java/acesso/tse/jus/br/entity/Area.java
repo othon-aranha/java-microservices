@@ -66,20 +66,23 @@ public class Area implements Serializable {
 	@Where(clause = "st_ativo = 1")
 	private Set<Area>			filhos; */
 
+	/*
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinTable(name = "vw_gerente_area", schema = "admacesso", joinColumns = @JoinColumn(name = "sq_secao_orgao", referencedColumnName = "sq_secao_orgao"), inverseJoinColumns = @JoinColumn(name = "sq_usuario", referencedColumnName = "sq_usuario"))
 	private Set<Usuario>		gerentes;
-
+    */
+	
 	public Area() {
 		super();
 	}
 
 	public Area(Integer id, String sigla, String nome, String email, Boolean status, Boolean zona, Integer numeroZona,
 			TipoArea tipo,
-			Integer id_secao_sup,
+			Integer id_secao_sup
 			// Area pai, 
 			// Set<Area> filhos, 
-			Set<Usuario> gerentes) {
+			// Set<Usuario> gerentes
+			) {
 		super();
 		this.id = id;
 		this.sigla = sigla;
@@ -92,7 +95,7 @@ public class Area implements Serializable {
 		this.tipo = tipo;
 		// this.pai = pai;
 		// this.filhos = filhos;
-		this.gerentes = gerentes;
+		// this.gerentes = gerentes;
 	}
 	
 
@@ -185,7 +188,7 @@ public class Area implements Serializable {
 	public void setFilhos(final Set<Area> filhos) {
 		this.filhos = filhos;
 	}
-    */
+    
 	
 	public Set<Usuario> getGerentes() {
 		return this.gerentes;
@@ -194,5 +197,5 @@ public class Area implements Serializable {
 	public void setGerentes(final Set<Usuario> gerentes) {
 		this.gerentes = gerentes;
 	}
-
+    */
 }

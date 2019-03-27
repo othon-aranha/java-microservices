@@ -18,7 +18,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import javax.persistence.OneToMany;
-
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -40,7 +40,7 @@ public class Usuario implements Serializable  {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_usuario")
-	@Column(name = "sq_usuario", unique = true)
+	@Column(name = "sq_usuario", unique = true, nullable=false)
 	private Integer				id;
 
 	@Column(name = "cd_usuario", nullable = false)
@@ -82,14 +82,15 @@ public class Usuario implements Serializable  {
 	@Enumerated(EnumType.ORDINAL)
 	private TipoUsuario			tipo;
 
-	@ManyToMany(mappedBy = "usuarios", fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH })
+	@ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "usuarios", fetch = FetchType.LAZY)
 	private Set<Modulo>	usuarioModulos;
 
-	@ManyToOne(optional = true, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = {CascadeType.ALL}, optional = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "cd_unidade", referencedColumnName = "cd", nullable = true)
 	private Unidade	unidade;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
+
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "usuario")
 	private Set<UsuarioArea>	areas;
 
 	/*
