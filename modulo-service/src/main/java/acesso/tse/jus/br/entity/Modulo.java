@@ -154,7 +154,7 @@ public class Modulo implements Serializable {
 	@OrderBy(value = "nome")
 	private Set<ObjetoModulo> objetos;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
+	@ManyToMany(fetch = FetchType.LAZY, cascade={CascadeType.REFRESH})
 	@JoinTable(name = "acesso_modulo", schema = "admacesso", joinColumns = @JoinColumn(name = "cd_modulo", referencedColumnName = "cd_modulo"), inverseJoinColumns = @JoinColumn(name = "sq_usuario", referencedColumnName = "sq_usuario"))
 	private Set<Usuario> usuarios;
 	

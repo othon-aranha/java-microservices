@@ -66,8 +66,12 @@ public class Area implements Serializable {
 	@Where(clause = "st_ativo = 1")
 	private Set<Area>			filhos; */
 
+<<<<<<< HEAD
 	/*
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
+=======
+	@ManyToMany(fetch = FetchType.LAZY)
+>>>>>>> bd3d568cd0810b1933e3a2a066658c11629b2bf3
 	@JoinTable(name = "vw_gerente_area", schema = "admacesso", joinColumns = @JoinColumn(name = "sq_secao_orgao", referencedColumnName = "sq_secao_orgao"), inverseJoinColumns = @JoinColumn(name = "sq_usuario", referencedColumnName = "sq_usuario"))
 	private Set<Usuario>		gerentes;
     */
