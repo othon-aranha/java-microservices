@@ -24,7 +24,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
+import org.hibernate.annotations.Cascade;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -82,15 +82,14 @@ public class Usuario implements Serializable  {
 	@Enumerated(EnumType.ORDINAL)
 	private TipoUsuario			tipo;
 
-	@ManyToMany(cascade = {CascadeType.ALL}, mappedBy = "usuarios", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "usuarios", fetch = FetchType.LAZY)
 	private Set<Modulo>	usuarioModulos;
 
-	@ManyToOne(cascade = {CascadeType.ALL}, optional = true, fetch = FetchType.EAGER)
+	@ManyToOne(optional = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "cd_unidade", referencedColumnName = "cd", nullable = true)
 	private Unidade	unidade;
 
-
-	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "usuario")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
 	private Set<UsuarioArea>	areas;
 
 	/*

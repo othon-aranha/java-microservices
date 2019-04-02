@@ -26,6 +26,7 @@ public interface ModuloRepository extends JpaRepository<Modulo, Integer>, JpaSpe
 	JdbcTemplate jdbctemplate = null;	
 		
 	@RestResource(path="/id")
+	@Query("SELECT a FROM Modulo a INNER JOIN a.usuarios u where a.id = :id")
 	Modulo findOne(@Param("id") Integer id);
 	
 	@RestResource(path="/sigla")

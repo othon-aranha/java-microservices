@@ -39,14 +39,13 @@ import acesso.tse.jus.br.repository.ModuloRepository;
 import acesso.tse.jus.br.resource.ModuloResource;
 
 
-
 @RestController
 @CrossOrigin(origins = {"http://localhost:4200"}, methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
 @RequestMapping("/modulo")
 public class ModuloRestController {
 
 	@Autowired
-	ModuloRepository repository;	
+	ModuloRepository repository;
 	RestTemplate restTemplate;
 	
 	@LoadBalanced @Bean
@@ -102,7 +101,7 @@ public class ModuloRestController {
 	public ResponseEntity<ModuloResource> update(@PathVariable Integer id, @RequestBody Modulo modulo) {
 		Modulo pmodulo = repository.findOne(id); 
 		if ( pmodulo != null) {
-			modulo.setId(pmodulo.getId()); 
+			modulo.setId(pmodulo.getId());
 			pmodulo = repository.save(modulo);
 			return new ResponseEntity<>(assembler.toResource(pmodulo), HttpStatus.OK);
 		} else {

@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class DominioRestController {
 	DominioRepository repository;	
 	RestTemplate restTemplate;
 	
-	@LoadBalanced @Bean
+	@LoadBalanced @Bean @Primary
 	RestTemplate restTemplate() {
 		return new RestTemplate();
 	}

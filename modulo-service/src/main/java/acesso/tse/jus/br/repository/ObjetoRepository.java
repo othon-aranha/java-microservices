@@ -17,6 +17,8 @@ public interface ObjetoRepository extends JpaRepository<Objeto, Integer> {
 	@Autowired		
 	JdbcTemplate jdbctemplate = null;	
 		
+	@RestResource(path="/id")
+	@Query("SELECT a FROM Objeto a where a.id = :id")
 	Objeto findOne(@Param("id") Integer id);
 	
 	@RestResource(path="/nome")

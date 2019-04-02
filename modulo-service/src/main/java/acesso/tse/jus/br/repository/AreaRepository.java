@@ -16,7 +16,9 @@ import acesso.tse.jus.br.entity.Area;
 public interface AreaRepository extends JpaRepository<Area, Integer> {	
 	@Autowired		
 	JdbcTemplate jdbctemplate = null;	
-		
+	
+	@RestResource(path="/id")
+	@Query("SELECT a FROM Area a where a.id = :id")
 	Area findOne(@Param("id") Integer id);
 	
 	@RestResource(path="/nome")

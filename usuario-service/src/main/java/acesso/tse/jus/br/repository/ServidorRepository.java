@@ -18,6 +18,8 @@ public interface ServidorRepository extends JpaRepository<Servidor, String>{
 	@Autowired		
 	JdbcTemplate jdbctemplate = null;
 	
+	@RestResource(path="/id")
+	@Query("SELECT a FROM Servidor a where a.id = :id")
 	Servidor findOne(@Param("id") String id); 
 		
 	@RestResource(path="/nome")

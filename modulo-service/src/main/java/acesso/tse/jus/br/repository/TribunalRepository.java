@@ -20,6 +20,8 @@ public interface TribunalRepository extends JpaRepository<Tribunal, Integer> {
 	@Autowired		
 	JdbcTemplate jdbctemplate = null;	
 		
+	@RestResource(path="/id")
+	@Query("SELECT a FROM Tribunal a where a.id = :id")
 	Tribunal findOne(@Param("id") Integer id);
 	
 	@RestResource(path="/sigla")

@@ -17,7 +17,9 @@ import acesso.tse.jus.br.entity.ManutencaoKey;
 public interface ManutencaoRepository extends JpaRepository<Manutencao, ManutencaoKey> {	
 	@Autowired		
 	JdbcTemplate jdbctemplate = null;	
-		
+	
+	@RestResource(path="/id")
+	@Query("SELECT a FROM Manutencao a where a.id = :id")
 	Manutencao findOne(@Param("id") ManutencaoKey id);
 	
 	@RestResource(path="/idModulo/{idModulo}")	

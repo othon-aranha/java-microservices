@@ -18,6 +18,8 @@ public interface MaquinaServidoraRepository extends JpaRepository<MaquinaServido
 	@Autowired		
 	JdbcTemplate jdbctemplate = null;	
 		
+	@RestResource(path="/id")
+	@Query("SELECT a FROM MaquinaServidora a where a.id = :id")
 	MaquinaServidora findOne(@Param("id") MaquinaServidoraPK id);
 	
 	@RestResource(path="/cdTrib/{cdTrib}")	

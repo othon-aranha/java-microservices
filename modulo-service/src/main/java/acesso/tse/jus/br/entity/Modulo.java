@@ -23,6 +23,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.NamedNativeQuery;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -154,10 +155,11 @@ public class Modulo implements Serializable {
 	@OrderBy(value = "nome")
 	private Set<ObjetoModulo> objetos;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade={CascadeType.REFRESH})
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "acesso_modulo", schema = "admacesso", joinColumns = @JoinColumn(name = "cd_modulo", referencedColumnName = "cd_modulo"), inverseJoinColumns = @JoinColumn(name = "sq_usuario", referencedColumnName = "sq_usuario"))
 	private Set<Usuario> usuarios;
 	
+ 	
 	//@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	//@JoinTable(name = "maquina_servidora", schema = "admacesso", joinColumns = @JoinColumn(name = "cd_modulo", referencedColumnName = "cd_modulo"))
 	//private Set<MaquinaServidora> servidores;	

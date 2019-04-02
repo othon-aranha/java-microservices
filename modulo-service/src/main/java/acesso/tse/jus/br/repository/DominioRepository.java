@@ -1,7 +1,5 @@
 package acesso.tse.jus.br.repository;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +16,9 @@ import acesso.tse.jus.br.entity.Dominio;
 public interface DominioRepository extends JpaRepository<Dominio, Integer> {	
 	@Autowired		
 	JdbcTemplate jdbctemplate = null;	
-		
+	
+	@RestResource(path="/id")
+	@Query("SELECT a FROM Dominio a where a.id = :id")
 	Dominio findOne(@Param("id") Integer id);
 	
 	@RestResource(path="/nome")
