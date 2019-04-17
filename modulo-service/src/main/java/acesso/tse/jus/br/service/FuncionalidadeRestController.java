@@ -25,20 +25,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import acesso.tse.jus.br.entity.Area;
-import acesso.tse.jus.br.repository.AreaRepository;
-import acesso.tse.jus.br.repository.DominioRepository;
-import acesso.tse.jus.br.resource.AreaResource;
+import acesso.tse.jus.br.entity.Funcionalidade;
+import acesso.tse.jus.br.repository.FuncionalidadeRepository;
+import acesso.tse.jus.br.resource.FuncionalidadeResource;
 
 
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:4200"}, methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
-@RequestMapping("/area")
-public class AreaRestController {
+@RequestMapping("/funcionalidade")
+public class FuncionalidadeRestController {
 
 	@Autowired
-	AreaRepository repository;	
+	FuncionalidadeRepository repository;	
 	RestTemplate restTemplate;
 	
 	@LoadBalanced @Bean
@@ -46,7 +45,7 @@ public class AreaRestController {
 		return new RestTemplate();
 	}
 		
-	AreaResourceAssembler assembler = new AreaResourceAssembler();
+	FuncionalidadeResourceAssembler assembler = new FuncionalidadeResourceAssembler();
 	
 	@PersistenceContext
     private EntityManager em;	
@@ -56,17 +55,17 @@ public class AreaRestController {
 		
 	}
 	
-	@GetMapping("/areas")
-	public ResponseEntity<List<AreaResource>> getAll(Pageable pageable) {
+	@GetMapping("/funcionalidades")
+	public ResponseEntity<List<FuncionalidadeResource>> getAll(Pageable pageable) {
 		return new ResponseEntity<>(assembler.toResources(repository.findAll(pageable)), HttpStatus.OK);
 	}
 	
 	// @Transactional
 	@GetMapping("/{id}")
-	public ResponseEntity<AreaResource> get(@PathVariable Integer id) {
-		Area parea = repository.findOne(id);
-		if (parea != null) {			
-			return new ResponseEntity<>(assembler.toResource(parea), HttpStatus.OK);
+	public ResponseEntity<FuncionalidadeResource> get(@PathVariable Integer id) {
+		Funcionalidade func = repository.findOne(id);
+		if (func != null) {			
+			return new ResponseEntity<>(assembler.toResource(func), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -74,10 +73,10 @@ public class AreaRestController {
 	
 	@Transactional
 	@PostMapping
-	public ResponseEntity<AreaResource> create(@RequestBody Area area) {
-		Area parea = repository.save(area);
-		if (parea != null) {
-			return new ResponseEntity<>(assembler.toResource(parea), HttpStatus.OK);					
+	public ResponseEntity<FuncionalidadeResource> create(@RequestBody Funcionalidade func) {
+		Funcionalidade pfunc = repository.save(func);
+		if (pfunc != null) {
+			return new ResponseEntity<>(assembler.toResource(func), HttpStatus.OK);					
 		} else {
 			return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
 		}
@@ -85,12 +84,12 @@ public class AreaRestController {
 	
 	@Transactional
 	@PutMapping("/{id}")
-	public ResponseEntity<AreaResource> update(@PathVariable Integer id, @RequestBody Area area) {
-		Area parea = repository.findOne(id); 
-		if ( parea != null) {
-			area.setId(parea.getId()); 
-			parea = repository.save(area);
-			return new ResponseEntity<>(assembler.toResource(parea), HttpStatus.OK);
+	public ResponseEntity<FuncionalidadeResource> update(@PathVariable Integer id, @RequestBody Funcionalidade func) {
+		Funcionalidade pfunc = repository.findOne(id); 
+		if ( pfunc != null) {
+			func.setId(pfunc.getId()); 
+			pfunc = repository.save(func);
+			return new ResponseEntity<>(assembler.toResource(pfunc), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
 		}
@@ -98,23 +97,19 @@ public class AreaRestController {
 	
 	@Transactional
 	@DeleteMapping("/{id}")
-	public ResponseEntity<AreaResource> delete(@PathVariable Integer id) {
-		Area parea = repository.findOne(id);
-		if ( parea != null) {
-			repository.delete(parea);
-			return new ResponseEntity<>(assembler.toResource(parea), HttpStatus.OK);
+	public ResponseEntity<FuncionalidadeResource> delete(@PathVariable Integer id) {
+		Funcionalidade func = repository.findOne(id);
+		if ( func != null) {
+			repository.delete(func);
+			return new ResponseEntity<>(assembler.toResource(func), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	}
-	
-	@GetMapping("/sigla/{sigla}")
-	public ResponseEntity<AreaResource> findBysiglaIgnoreCase(@PathVariable String sigla, Pageable pageable) {
-		return new ResponseEntity<>(assembler.toResource(repository.findBysiglaIgnoreCase(sigla)), HttpStatus.OK);
-	}	
+
 	
 	@GetMapping("/nome/{nome}")
-	public ResponseEntity<List<AreaResource>> findBynomeIgnoreCaseContaining(@PathVariable String nome, Pageable pageable) {
+	public ResponseEntity<List<FuncionalidadeResource>> findBynomeIgnoreCaseContaining(@PathVariable String nome, Pageable pageable) {
 		return new ResponseEntity<>(assembler.toResources(repository.findBynomeIgnoreCaseContaining(nome, pageable)), HttpStatus.OK);
 	}	
 	
