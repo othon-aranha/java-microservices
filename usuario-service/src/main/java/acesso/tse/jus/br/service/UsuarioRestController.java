@@ -111,9 +111,9 @@ public class UsuarioRestController {
 	@Transactional(timeout = 100)
 	@PostMapping
 	public ResponseEntity<UsuarioResource> create(@RequestBody Usuario usuario) {
-		usuario = repository.save(usuario);
-		if (usuario != null) {
-			return new ResponseEntity<>(assembler.toResource(usuario), HttpStatus.OK);					
+		Usuario pusuario = repository.save(usuario);
+		if (pusuario != null) {
+			return new ResponseEntity<>(assembler.toResource(pusuario), HttpStatus.OK);					
 		} else {
 			return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
 		}
@@ -125,9 +125,9 @@ public class UsuarioRestController {
 		Usuario pusuario = repository.findOne(id);
 		if (pusuario != null) {
 			pusuario.setUnidade(usuario.getUnidade());
-			usuario.setId(pusuario.getId());
+			pusuario.setId(usuario.getId());
 			pusuario = repository.save(usuario);
-			return new ResponseEntity<>(assembler.toResource(usuario), HttpStatus.OK);
+			return new ResponseEntity<>(assembler.toResource(pusuario), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
 		}
