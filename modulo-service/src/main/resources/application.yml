@@ -1,0 +1,36 @@
+server:
+  port: 8081
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: modulo-service
+  cloud: 
+    discovery:
+      client:
+        simple:
+          local:
+            uri: http://localhost:8888              
+  jpa:
+    show-sql: true
+    database: oracle
+    database-platform: org.hibernate.dialect.Oracle12cDialect
+    hibernate:
+      ddl-auto: none  
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: admacesso
+    password: admacesso
+    driver-class-name: oracle.jdbc.driver.OracleDriver        
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false  
+eureka:
+  client:
+    register-with-eureka: true
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+    hostname: localhost          
