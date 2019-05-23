@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 // import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +52,9 @@ public class UsuarioRestController {
 	UsuarioRepository repository;	
 	RestTemplate restTemplate;
 	
+	@Autowired
+	private Environment env;
+	
 	@LoadBalanced @Bean
 	RestTemplate restTemplate() {
 		return new RestTemplate();
@@ -64,6 +68,22 @@ public class UsuarioRestController {
 	@PostConstruct
 	public void init() {
 		
+	}
+	
+	@RequestMapping("/")
+	public String home() {
+		// This is useful for debugging
+		// When having multiple instance of gallery service running at different ports.
+		// We load balance among them, and display which instance received the request.
+		return "Acesso Service - Modulo rodando em porta: " + env.getProperty("local.server.port");
+	}
+	
+	// -------- Admin Area --------
+	// This method should only be accessed by users with role of 'admin'
+	// We'll add the logic of role based auth later
+	@RequestMapping("/admin")
+	public String homeAdmin() {
+		return "Esta é a área de administração do serviço rodando na porta: " + env.getProperty("local.server.port");
 	}
 	
 	@GetMapping("/usuarios")

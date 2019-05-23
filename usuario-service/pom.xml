@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>acesso.tse.jus.br</groupId>
-	<artifactId>acessoservice</artifactId>
+	<artifactId>acessoservice-usuario</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>AcessoService - Modulo</name>
+	<name>AcessoService - Usuario</name>
 	<description>Spring Boot - Acesso</description>
 
 	<parent>
@@ -180,6 +180,14 @@
   			<artifactId>jackson-mapper-asl</artifactId>
   			<version>1.9.13</version>
   		</dependency>
+
+  		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		    <!-- <version>2.8.5</version> -->
+		</dependency>
+		
   		
   		<dependency>
   			<groupId>org.scala-lang</groupId>
@@ -196,6 +204,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>

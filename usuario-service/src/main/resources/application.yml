@@ -23,10 +23,14 @@ spring:
     username: admacesso
     password: admacesso
     driver-class-name: oracle.jdbc.driver.OracleDriver        
-      
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
 eureka:
   client:
+    register-with-eureka: true
     serviceUrl:
       defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
   instance:
-    preferIpAddress: true          
+    preferIpAddress: true
+    hostname: localhost             
