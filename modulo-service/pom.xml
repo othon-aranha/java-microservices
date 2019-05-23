@@ -11,11 +11,11 @@
        </parent>
        
        <groupId>acesso.tse.jus.br</groupId>
-       <artifactId>acessoservice-usuario</artifactId>
+       <artifactId>acessoservice-modulo</artifactId>
        <version>0.0.1-SNAPSHOT</version>
        <packaging>jar</packaging>
        
-       <name>AcessoService - Usuário</name>
+       <name>AcessoService - Modulo</name>
        <description>Spring Boot - Acesso</description>
 
        <properties>
@@ -87,11 +87,11 @@
              </dependency>
 
             
-	  		<dependency>
-	      		<groupId>com.oracle</groupId>
-	      		<artifactId>ojdbc6</artifactId>
-	      		<version>11.2.0.3.0</version>
-	  		</dependency>  		
+	     <dependency>
+	      	<groupId>com.oracle</groupId>
+	      	<artifactId>ojdbc6</artifactId>
+	      	<version>11.2.0.3.0</version>
+	      </dependency>  		
 	
 	  		<!-- dependency>
 	      		<groupId>com.oracle</groupId>
@@ -100,10 +100,10 @@
 	  		</dependency> -->  
              
             <!-- https://mvnrepository.com/artifact/com.google/gson -->
-			<dependency>
-			    <groupId>com.google.code.gson</groupId>
-			    <artifactId>gson</artifactId>
-			 </dependency>             
+	     <dependency>
+		<groupId>com.google.code.gson</groupId>
+		<artifactId>gson</artifactId>
+	     </dependency>             
              
              <dependency>
                  <groupId>io.springfox</groupId>
@@ -112,17 +112,16 @@
              </dependency>
              
              <dependency>
-	             <groupId>org.projectlombok</groupId>
-	             <artifactId>lombok</artifactId>
+	        <groupId>org.projectlombok</groupId>
+	        <artifactId>lombok</artifactId>
              </dependency>
 
-	        <!-- HikariCP connection pool -->
-	        <dependency>
-	            <groupId>com.zaxxer</groupId>
-	            <artifactId>HikariCP</artifactId>
-	            <!--  version>2.6.0</version -->
-	        </dependency>             
-             
+	     <!-- HikariCP connection pool -->
+	     <dependency>
+	       <groupId>com.zaxxer</groupId>
+	       <artifactId>HikariCP</artifactId>
+	       <!--  version>2.6.0</version -->
+	     </dependency>             
 
              <dependency>
                     <groupId>com.h2database</groupId>
