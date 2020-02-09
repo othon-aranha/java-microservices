@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
-Implementation-Title: AcessoService - Modulo
+Implementation-Title: AcessoService-Modulo
 Implementation-Version: 0.0.1-SNAPSHOT
 Built-By: othon
 Implementation-Vendor-Id: acesso.tse.jus.br
-Build-Jdk: 1.8.0_172
+Build-Jdk: 1.8.0_192
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/acessoservice-modulo
 Created-By: Maven Integration for Eclipse

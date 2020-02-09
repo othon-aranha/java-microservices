@@ -28,7 +28,7 @@ public interface UsuarioAreaRepository extends JpaRepository<UsuarioArea, Intege
 	
 	@RestResource(path="/login")
 	@Query("SELECT ua FROM UsuarioArea ua INNER JOIN ua.usuario u WHERE u.login = :login")
-	UsuarioArea findBylogin(@Param("login") String login);
+	List<UsuarioArea> findBylogin(@Param("login") String login);
 	
 	@RestResource(path="/area")
 	@Query("SELECT ua FROM UsuarioArea ua INNER JOIN ua.area a WHERE a.sigla = :area")

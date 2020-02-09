@@ -1,5 +1,12 @@
 package acesso.tse.jus.br;
 
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -11,17 +18,26 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
+import acesso.tse.jus.br.repository.ModuloRepository;
+
 
 @EnableHystrixDashboard
 @EnableCircuitBreaker
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableEurekaClient
-public class ModuloApplication {
+public class ModuloApplication implements CommandLineRunner {
 
-	  
+
+	@Autowired
+	private ModuloRepository moduloRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(ModuloApplication.class, args);		
+	}
+	
+	@Override
+	public void run(String... args) throws Exception {
 	}
 	
 }

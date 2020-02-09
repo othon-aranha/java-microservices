@@ -15,6 +15,7 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import acesso.tse.jus.br.entity.Modulo;
+import acesso.tse.jus.br.entity.Perfil;
 import acesso.tse.jus.br.entity.SimNaoType;
 import acesso.tse.jus.br.entity.StatusModulo;
 import acesso.tse.jus.br.entity.TipoModulo;
@@ -28,6 +29,10 @@ public interface ModuloRepository extends JpaRepository<Modulo, Integer>, JpaSpe
 	@RestResource(path="/id")
 	@Query("SELECT a FROM Modulo a INNER JOIN a.usuarios u where a.id = :id")
 	Modulo findOne(@Param("id") Integer id);
+	
+	@RestResource(path="/modulos ")
+	@Query("SELECT a FROM Modulo a")
+	Page<Modulo> findAll(Pageable pageable);		
 	
 	@RestResource(path="/sigla")
 	Modulo findBysigla(@Param("sigla") String sigla);

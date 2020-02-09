@@ -32,7 +32,7 @@ import acesso.tse.jus.br.resource.GrupoResource;
 
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200"}, methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:8100"}, methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
 @RequestMapping("/grupo")
 public class GrupoRestController {
 

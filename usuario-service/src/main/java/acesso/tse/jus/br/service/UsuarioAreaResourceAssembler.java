@@ -17,8 +17,8 @@ public class UsuarioAreaResourceAssembler extends ResourceAssemblerSupport<Usuar
 
 	
 	@Override
-	public UsuarioAreaResource toResource(UsuarioArea usuarioare) {
-		return new UsuarioAreaResource(usuarioare, linkTo(methodOn(TribunalRestController.class).get(usuarioare.getId())).withSelfRel());
+	public UsuarioAreaResource toResource(UsuarioArea usuarioarea) {
+		return new UsuarioAreaResource(usuarioarea, linkTo(methodOn(UsuarioAreaRestController.class).get(usuarioarea.getId())).withSelfRel());
 	}
 	
 	

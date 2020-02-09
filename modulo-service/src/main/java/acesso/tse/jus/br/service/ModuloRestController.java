@@ -33,15 +33,15 @@ import acesso.tse.jus.br.dto.ModuloDTO;
 import acesso.tse.jus.br.entity.Modulo;
 import acesso.tse.jus.br.entity.SimNaoType;
 import acesso.tse.jus.br.entity.StatusModulo;
+import acesso.tse.jus.br.entity.TipoAtualizacao;
 import acesso.tse.jus.br.entity.TipoModulo;
 import acesso.tse.jus.br.impl.ModuloRepositoryCustomImpl;
-import acesso.tse.jus.br.entity.TipoAtualizacao;
 import acesso.tse.jus.br.repository.ModuloRepository;
 import acesso.tse.jus.br.resource.ModuloResource;
 
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200"}, methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:8100"}, methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
 @RequestMapping("/modulo")
 public class ModuloRestController {
 
@@ -85,8 +85,8 @@ public class ModuloRestController {
 	@GetMapping("/modulos")
 	public ResponseEntity<List<ModuloResource>> getAll() {
 		return new ResponseEntity<>(assembler.toResources(repository.findAll()), HttpStatus.OK);
-	}	
-	
+	}
+		
 	@PostMapping("/modulos/filtrar")
 	public ResponseEntity<List<ModuloResource>> get(@RequestBody(required=true) String body) {
 		ModuloDTO modulo = new Gson().fromJson(body, ModuloDTO.class);
@@ -104,6 +104,7 @@ public class ModuloRestController {
 			return new ResponseEntity<>(assembler.toResource(modulo), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			//return new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Modulo.class.getName());
 		}
 	}
 	

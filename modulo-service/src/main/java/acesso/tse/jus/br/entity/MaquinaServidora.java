@@ -30,7 +30,7 @@ public class MaquinaServidora implements Serializable  {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "cd_trib", referencedColumnName = "cd_trib", nullable = false)
-	private Tribunal	tribunal;
+	private Tribunal tribunal;
     
     @Basic(optional = false)
     @NotNull

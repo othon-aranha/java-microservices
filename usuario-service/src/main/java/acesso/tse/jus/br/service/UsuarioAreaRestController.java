@@ -30,7 +30,7 @@ import acesso.tse.jus.br.resource.UsuarioAreaResource;
 
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200"}, allowCredentials="true",  methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:8100"}, allowCredentials="true",  methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
 @RequestMapping("/usuarioarea")
 public class UsuarioAreaRestController {
 
@@ -69,13 +69,8 @@ public class UsuarioAreaRestController {
 	}
 	
 	@GetMapping("usuarioareas/login/{login}")
-	public ResponseEntity<UsuarioAreaResource> findBylogin(@PathVariable String login) {
-		UsuarioArea usuarioarea = repository.findBylogin(login);
-		if (usuarioarea != null) {			
-			return new ResponseEntity<>(assembler.toResource(usuarioarea), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+	public ResponseEntity<List<UsuarioAreaResource>> findBylogin(@PathVariable String login) {
+		return new ResponseEntity<>(assembler.toResources(repository.findBylogin(login)), HttpStatus.OK);
 	}
 	
 	@GetMapping("/usuarioareas/area/{area}")

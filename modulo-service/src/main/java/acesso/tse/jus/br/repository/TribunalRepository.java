@@ -31,5 +31,8 @@ public interface TribunalRepository extends JpaRepository<Tribunal, Integer> {
 	Tribunal findByacesso(@Param("acesso") String acesso);	
 	
 	@Query("SELECT a FROM Tribunal a")
-	Page<Tribunal> findAll(Pageable pageable);		
+	Page<Tribunal> findAll(Pageable pageable);	
+	
+	@Query(value="SELECT * FROM ADMACESSO.TRIBUNAL WHERE CD_TRIB = ( SELECT MAX(CD_TRIB) FROM ADMACESSO.TRIBUNAL )", nativeQuery = true)	
+	Tribunal findMaxId();
 }

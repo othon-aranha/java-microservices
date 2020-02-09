@@ -2,6 +2,8 @@ package acesso.tse.jus.br.service;
 
 import java.util.List;
 
+import java.net.URI;
+
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import acesso.tse.jus.br.entity.Objeto;
 import acesso.tse.jus.br.repository.ObjetoRepository;
 import acesso.tse.jus.br.resource.ObjetoResource;
@@ -31,7 +35,7 @@ import acesso.tse.jus.br.resource.ObjetoResource;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:8100"}, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT})
 @RequestMapping("/objeto")
 public class ObjetoRestController {
 
@@ -72,11 +76,9 @@ public class ObjetoRestController {
 	@PostMapping
 	public ResponseEntity<ObjetoResource> create(@RequestBody Objeto objeto) {
 		objeto = repository.save(objeto);
-		if (objeto != null) {
-			return new ResponseEntity<>(assembler.toResource(objeto), HttpStatus.OK);					
-		} else {
-			return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
-		}
+		// URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/id").buildAndExpand(objeto.getId()).toUri();
+		
+		return new ResponseEntity<>(assembler.toResource(objeto), HttpStatus.OK);
 	}
 	
 	@PutMapping("/{id}")

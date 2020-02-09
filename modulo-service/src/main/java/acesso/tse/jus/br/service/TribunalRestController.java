@@ -30,7 +30,7 @@ import acesso.tse.jus.br.resource.TribunalResource;
 
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200"}, allowCredentials="true",  methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:8100"}, allowCredentials="true",  methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
 @RequestMapping("/tribunal")
 public class TribunalRestController {
 
@@ -70,6 +70,14 @@ public class TribunalRestController {
 	
 	@PostMapping
 	public ResponseEntity<TribunalResource> create(@RequestBody Tribunal tribunal) {
+		// Seta o valor para o próximo id
+		Integer nextValue = 0;
+		Tribunal ptribunal = repository.findMaxId();
+		if ( ptribunal != null) {
+		  nextValue=ptribunal.getId();
+		}
+		nextValue++;
+		tribunal.setId(nextValue);
 		tribunal = repository.save(tribunal);
 		if (tribunal != null) {
 			return new ResponseEntity<>(assembler.toResource(tribunal), HttpStatus.OK);					
