@@ -10,4 +10,4 @@ spring:
     config:
       server:
         git:
-          uri: file://D:\Desenvolvimento\Repositorios\Java\Java\config-repo
+          uri: file:///D:\Desenvolvimento\Repositorios\Java\Java\config-repo
