@@ -11,9 +11,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import acesso.tse.jus.br.AcessoConstants;
-//import br.net.woodstock.rockframework.domain.persistence.AbstractIntegerEntity;
-
 @Entity
 @Table(name = "tribunal", schema = "admacesso")
 public class Tribunal implements Serializable  {

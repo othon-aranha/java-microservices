@@ -23,6 +23,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>, JpaS
 	@Autowired		
 	JdbcTemplate jdbctemplate = null;
 	
+	@RestResource(path="/id")
+	@Query("SELECT a FROM Usuario a where a.id = :id")
 	Usuario findOne(@Param("id") Integer id); 
 		
 	@RestResource(path="/login")
@@ -61,7 +63,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>, JpaS
 	Page<Usuario> findAll(Pageable pageable);
 	
 	@RestResource(path="/usuarios/siglaModulo/{sigla}")
-	@Query("SELECT a FROM Usuario a INNER JOIN a.usuarioModulos u where UPPER(u.sigla) = ?")
+	@Query("SELECT a FROM Usuario a INNER JOIN a.usuarioModulos u where UPPER(u.sigla) = :sigla")
 	List<Usuario> findBySiglaModulo(@Param("sigla") String sigla);
 	
 	List<Usuario> findAll(Specification<Usuario> spec);	

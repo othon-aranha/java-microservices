@@ -2,12 +2,20 @@ package acesso.tse.jus.br.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,8 +29,9 @@ public class Manutencao implements Serializable {
 
 	private static final long	serialVersionUID	= AcessoConstants.VERSAO;
 
-	@EmbeddedId
-	private ManutencaoKey id;
+	@Id
+	@Column(name = "sq_manutencao", nullable = false)
+	private Integer	id;
 
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
@@ -51,9 +60,22 @@ public class Manutencao implements Serializable {
 	@Column(name = "instancia")
 	@Size(max = 30)
 	private String				instancia;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "sq_maquina_servidora", referencedColumnName = "sq_maquina_servidora", nullable = false)
+	private MaquinaServidora	maquinaservidora;
 
-	public Manutencao(ManutencaoKey id, StatusManutencao status, Date dataManutencao, String mensagemErro,
-			String versao, String conexao, String maquina, String instancia) {
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "cd_modulo", referencedColumnName = "cd_modulo", nullable = false)
+	private Modulo	modulo;
+	
+	public Manutencao() {
+		super();
+	}
+
+	public Manutencao(Integer id, StatusManutencao status, Date dataManutencao, @Size(max = 4000) String mensagemErro,
+			@Size(max = 20) String versao, @Size(max = 30) String conexao, @Size(max = 30) String maquina,
+			@Size(max = 30) String instancia, MaquinaServidora maquinaservidora, Modulo modulo) {
 		super();
 		this.id = id;
 		this.status = status;
@@ -63,24 +85,38 @@ public class Manutencao implements Serializable {
 		this.conexao = conexao;
 		this.maquina = maquina;
 		this.instancia = instancia;
+		this.maquinaservidora = maquinaservidora;
+		this.modulo = modulo;
+	}
+	
+	public MaquinaServidora getMaquinaservidora() {
+		return maquinaservidora;
 	}
 
-	public Manutencao() {
-		super();
+	public void setMaquinaservidora(MaquinaServidora maquinaservidora) {
+		this.maquinaservidora = maquinaservidora;
 	}
 
-	public Manutencao(final ManutencaoKey id) {
+	public Modulo getModulo() {
+		return modulo;
+	}
+
+	public void setModulo(Modulo modulo) {
+		this.modulo = modulo;
+	}
+
+	public Manutencao(final Integer id) {
 		super();
 		this.id = id;
 	}
 
 	
-	public ManutencaoKey getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
 	
-	public void setId(final ManutencaoKey id) {
+	public void setId(final Integer id) {
 		this.id = id;
 	}
 
@@ -139,5 +175,6 @@ public class Manutencao implements Serializable {
 	public void setInstancia(final String instancia) {
 		this.instancia = instancia;
 	}
+
 
 }

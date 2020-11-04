@@ -2,9 +2,14 @@ package acesso.tse.jus.br.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import javax.validation.constraints.NotNull;
@@ -19,8 +24,28 @@ public class MaquinaServidora implements Serializable  {
 
 	private static final long	serialVersionUID	= AcessoConstants.VERSAO;
 
-	@EmbeddedId
-	private MaquinaServidoraPK	id;
+	@Id
+	@Column(name = "sq_maquina_servidora", nullable = false)
+	private Integer	id;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "cd_trib", referencedColumnName = "cd_trib", nullable = false)
+	private Tribunal tribunal;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "alias")
+    private String alias;
+
+
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
 
 	@Column(name = "descricao", nullable = false)
 	@NotNull
@@ -45,12 +70,33 @@ public class MaquinaServidora implements Serializable  {
 		super();
 	}
 
-	public MaquinaServidoraPK getId() {
+	public MaquinaServidora(Integer id, Tribunal tribunal, @NotNull @Size(min = 1, max = 20) String alias,
+			@NotNull @Size(min = 2, max = 200) String descricao, @NotNull @Size(min = 2, max = 20) String usuario,
+			@NotNull @Size(min = 2, max = 128) String senha, @Size(max = 2000) String conexao) {
+		super();
+		this.id = id;
+		this.tribunal = tribunal;
+		this.alias = alias;
+		this.descricao = descricao;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.conexao = conexao;
+	}
+
+	public Tribunal getTribunal() {
+		return tribunal;
+	}
+
+	public void setTribunal(Tribunal tribunal) {
+		this.tribunal = tribunal;
+	}
+
+	public Integer getId() {
 		return this.id;
 	}
 
 	
-	public void setId(final MaquinaServidoraPK id) {
+	public void setId(final Integer id) {
 		this.id = id;
 	}
 

@@ -33,7 +33,7 @@ import acesso.tse.jus.br.resource.AreaResource;
 
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200"}, methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:8100"}, methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
 @RequestMapping("/area")
 public class AreaRestController {
 
@@ -57,16 +57,22 @@ public class AreaRestController {
 	}
 	
 	@GetMapping("/areas")
-	public ResponseEntity<List<AreaResource>> getAll(Pageable pageable) {
-		return new ResponseEntity<>(assembler.toResources(repository.findAll(pageable)), HttpStatus.OK);
+	public ResponseEntity<List<AreaResource>> getAll() {
+		return new ResponseEntity<>(assembler.toResources(repository.findAll()), HttpStatus.OK);
 	}
+	
+	@GetMapping("/areas/status/{status}")
+	public ResponseEntity<List<AreaResource>>findBystatus(@PathVariable Boolean status, Pageable pageable) {
+		return new ResponseEntity<>(assembler.toResources(repository.findBystatus(status, pageable)), HttpStatus.OK);
+	}
+	
 	
 	// @Transactional
 	@GetMapping("/{id}")
 	public ResponseEntity<AreaResource> get(@PathVariable Integer id) {
-		Area dominio = repository.findOne(id);
-		if (dominio != null) {			
-			return new ResponseEntity<>(assembler.toResource(dominio), HttpStatus.OK);
+		Area parea = repository.findOne(id);
+		if (parea != null) {			
+			return new ResponseEntity<>(assembler.toResource(parea), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -74,10 +80,10 @@ public class AreaRestController {
 	
 	@Transactional
 	@PostMapping
-	public ResponseEntity<AreaResource> create(@RequestBody Area dominio) {
-		dominio = repository.save(dominio);
-		if (dominio != null) {
-			return new ResponseEntity<>(assembler.toResource(dominio), HttpStatus.OK);					
+	public ResponseEntity<AreaResource> create(@RequestBody Area area) {
+		Area parea = repository.save(area);
+		if (parea != null) {
+			return new ResponseEntity<>(assembler.toResource(parea), HttpStatus.OK);					
 		} else {
 			return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
 		}
@@ -99,10 +105,10 @@ public class AreaRestController {
 	@Transactional
 	@DeleteMapping("/{id}")
 	public ResponseEntity<AreaResource> delete(@PathVariable Integer id) {
-		Area area = repository.findOne(id);
-		if (area != null) {
-			repository.delete(area);
-			return new ResponseEntity<>(assembler.toResource(area), HttpStatus.OK);
+		Area parea = repository.findOne(id);
+		if ( parea != null) {
+			repository.delete(parea);
+			return new ResponseEntity<>(assembler.toResource(parea), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
 		}

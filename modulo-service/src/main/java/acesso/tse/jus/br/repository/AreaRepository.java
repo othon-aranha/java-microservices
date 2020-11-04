@@ -1,5 +1,7 @@
 package acesso.tse.jus.br.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +18,9 @@ import acesso.tse.jus.br.entity.Area;
 public interface AreaRepository extends JpaRepository<Area, Integer> {	
 	@Autowired		
 	JdbcTemplate jdbctemplate = null;	
-		
+	
+	@RestResource(path="/id")
+	@Query("SELECT a FROM Area a where a.id = :id")
 	Area findOne(@Param("id") Integer id);
 	
 	@RestResource(path="/nome")
@@ -25,6 +29,9 @@ public interface AreaRepository extends JpaRepository<Area, Integer> {
 	@RestResource(path="/sigla")
 	Area findBysiglaIgnoreCase(@Param("sigla") String sigla);	
 	
+	@Query("SELECT a FROM Area a WHERE status = :status")
+	Page<Area> findBystatus(@Param("status") Boolean status, Pageable pageable);		
+	
 	@Query("SELECT a FROM Area a")
-	Page<Area> findAll(Pageable pageable);		
+	List<Area> findAll();	 	
 }

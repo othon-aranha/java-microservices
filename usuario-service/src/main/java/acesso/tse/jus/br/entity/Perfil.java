@@ -38,8 +38,8 @@ public class Perfil  {
 	@JoinColumn(name = "cd_modulo", referencedColumnName = "cd_modulo", nullable = true)
 	private Modulo				modulo;
 
-	@ManyToMany(mappedBy = "perfis", fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH })
-	private Set<UsuarioArea>	usuarios;
+	// @ManyToMany(mappedBy = "perfis", fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH })
+	// private Set<UsuarioArea>	usuarios;
     
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinTable(name = "perfil_objeto", schema = "admacesso", joinColumns = @JoinColumn(name = "cd_perfil", referencedColumnName = "cd_perfil"), inverseJoinColumns = @JoinColumn(name = "sq_objeto_modulo", referencedColumnName = "sq_objeto_modulo"))
@@ -49,14 +49,15 @@ public class Perfil  {
 		super();
 	}
 
-	public Perfil(String id, String nome, Modulo modulo, Set<UsuarioArea> usuarios,
-			Set<ObjetoModulo> objetos
+	public Perfil(String id, String nome, Modulo modulo 
+			//,Set<UsuarioArea> usuarios
+			,Set<ObjetoModulo> objetos
 			) {
 		super();
 		this.id = id;
 		this.nome = nome;		
 		this.modulo = modulo;
-		this.usuarios = usuarios;
+		// this.usuarios = usuarios;
 		this.objetos = objetos;
 	}
 
@@ -86,14 +87,15 @@ public class Perfil  {
 		this.modulo = modulo;
 	}
 
-	public Set<UsuarioArea> getUsuarios() {
+	/*public Set<UsuarioArea> getUsuarios() {
 		return this.usuarios;
 	}
 
 	public void setUsuarios(final Set<UsuarioArea> usuarios) {
 		this.usuarios = usuarios;
 	}
-
+    */
+	
 	public Set<ObjetoModulo> getObjetos() {
 		return this.objetos;
 	}

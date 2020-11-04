@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 // import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,13 +44,16 @@ import acesso.tse.jus.br.resource.UsuarioResource;
 
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200"}, allowCredentials="true",  methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:8100"}, allowCredentials="true",  methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
 @RequestMapping("/usuario")
 public class UsuarioRestController {
 
 	@Autowired
 	UsuarioRepository repository;	
 	RestTemplate restTemplate;
+	
+	@Autowired
+	private Environment env;
 	
 	@LoadBalanced @Bean
 	RestTemplate restTemplate() {
@@ -64,6 +68,22 @@ public class UsuarioRestController {
 	@PostConstruct
 	public void init() {
 		
+	}
+	
+	@RequestMapping("/")
+	public String home() {
+		// This is useful for debugging
+		// When having multiple instance of gallery service running at different ports.
+		// We load balance among them, and display which instance received the request.
+		return "Acesso Service - Modulo rodando em porta: " + env.getProperty("local.server.port");
+	}
+	
+	// -------- Admin Area --------
+	// This method should only be accessed by users with role of 'admin'
+	// We'll add the logic of role based auth later
+	@RequestMapping("/admin")
+	public String homeAdmin() {
+		return "Esta é a área de administração do serviço rodando na porta: " + env.getProperty("local.server.port");
 	}
 	
 	@GetMapping("/usuarios")
@@ -111,9 +131,9 @@ public class UsuarioRestController {
 	@Transactional(timeout = 100)
 	@PostMapping
 	public ResponseEntity<UsuarioResource> create(@RequestBody Usuario usuario) {
-		usuario = repository.save(usuario);
-		if (usuario != null) {
-			return new ResponseEntity<>(assembler.toResource(usuario), HttpStatus.OK);					
+		Usuario pusuario = repository.save(usuario);
+		if (pusuario != null) {
+			return new ResponseEntity<>(assembler.toResource(pusuario), HttpStatus.OK);					
 		} else {
 			return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
 		}
@@ -125,9 +145,9 @@ public class UsuarioRestController {
 		Usuario pusuario = repository.findOne(id);
 		if (pusuario != null) {
 			pusuario.setUnidade(usuario.getUnidade());
-			usuario.setId(pusuario.getId());
+			pusuario.setId(usuario.getId());
 			pusuario = repository.save(usuario);
-			return new ResponseEntity<>(assembler.toResource(usuario), HttpStatus.OK);
+			return new ResponseEntity<>(assembler.toResource(pusuario), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
 		}

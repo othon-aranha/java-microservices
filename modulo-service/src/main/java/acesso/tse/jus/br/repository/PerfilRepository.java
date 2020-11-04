@@ -20,6 +20,8 @@ public interface PerfilRepository extends JpaRepository<Perfil, String> {
 	@Autowired		
 	JdbcTemplate jdbctemplate = null;	
 		
+	@RestResource(path="/id")
+	@Query("SELECT a FROM Perfil a where a.id = :id")
 	Perfil findOne(@Param("id") String id);
 	
 	@RestResource(path="/nome")

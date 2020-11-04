@@ -10,7 +10,7 @@
  
 	<mvc:annotation-driven />
 	<mvc:cors>
-		<mvc:mapping path="/customers"
+		<mvc:mapping path="usuario"
 			allowed-origins="http://localhost:4200"
 			allowed-methods="POST, GET, PUT, DELETE"
 			allowed-headers="Content-Type"

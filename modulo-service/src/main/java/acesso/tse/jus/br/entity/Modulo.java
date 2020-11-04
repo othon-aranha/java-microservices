@@ -28,8 +28,6 @@ import org.hibernate.annotations.NamedNativeQuery;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import acesso.tse.jus.br.AcessoConstants;
-//import br.net.woodstock.rockframework.domain.persistence.AbstractIntegerEntity;
-
 
 @NamedQuery(name = "Modulo.moduloByModuloDTO", query = "SELECT a FROM Modulo a")
 @NamedNativeQuery(name="findBytipoModulo", query = "SELECT * FROM ADMACESSO.MODULO WHERE TP_MODULO = :tipoModulo ", resultClass = Modulo.class)
@@ -150,20 +148,23 @@ public class Modulo implements Serializable {
 	@OrderBy(value = "nome")
 	private Set<Perfil>	perfis;
     
- 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "objeto")
+ 	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "objeto")
 	@OrderBy(value = "nome")
 	private Set<ObjetoModulo> objetos;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade={CascadeType.REFRESH})
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinTable(name = "acesso_modulo", schema = "admacesso", joinColumns = @JoinColumn(name = "cd_modulo", referencedColumnName = "cd_modulo"), inverseJoinColumns = @JoinColumn(name = "sq_usuario", referencedColumnName = "sq_usuario"))
 	private Set<Usuario> usuarios;
 	
-	//@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
-	//@JoinTable(name = "maquina_servidora", schema = "admacesso", joinColumns = @JoinColumn(name = "cd_modulo", referencedColumnName = "cd_modulo"))
-	//private Set<MaquinaServidora> servidores;	
+ 	/*
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
+	@JoinTable(name = "maquina_servidora", schema = "admacesso", joinColumns = @JoinColumn(name = "cd_modulo", referencedColumnName = "cd_modulo"))
+	private Set<MaquinaServidora> servidores;	
 	
-	/*
-	  public Set<MaquinaServidora> getServidores() {
+	
+	public Set<MaquinaServidora> getServidores() {
 	 
 		return servidores;
 	}
@@ -171,7 +172,6 @@ public class Modulo implements Serializable {
 	public void setServidores(Set<MaquinaServidora> servidores) {
 		this.servidores = servidores;
 	}
-	
 	*/
 	
 	@JsonIgnore
@@ -182,8 +182,7 @@ public class Modulo implements Serializable {
 	public void setUsuarios(final Set<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}	
-    
-	
+ 	
 	public Modulo() {
 		super();
 	}
@@ -216,9 +215,10 @@ public class Modulo implements Serializable {
 			TipoAtualizacao tipoAtualizacao, StatusModulo statusModulo, 
 			Tribunal tribunal,			 
 			Set<ObjetoModulo> objetos,
-			Set<Perfil> perfis,
-			Set<Usuario> usuarios) {
-			//Set<MaquinaServidora> servidores) {
+			Set<Perfil> perfis
+			//,Set<Usuario> usuarios
+			//,Set<MaquinaServidora> servidores
+			) {
 		super();
 		this.id = id;
 		this.sigla = sigla;
@@ -244,8 +244,8 @@ public class Modulo implements Serializable {
 		
 		this.objetos = objetos;
 		this.perfis = perfis;
-		this.usuarios = usuarios;
-		//this.servidores = servidores;		
+		// this.usuarios = usuarios;
+		// this.servidores = servidores;		
 		
 	}
 
@@ -433,6 +433,31 @@ public class Modulo implements Serializable {
 
 	public void setMensagemCompartilhada(Boolean mensagemCompartilhada) {
 		this.mensagemCompartilhada = mensagemCompartilhada;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Modulo other = (Modulo) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 	
     

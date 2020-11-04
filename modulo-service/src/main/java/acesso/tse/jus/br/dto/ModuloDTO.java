@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
@@ -27,6 +28,7 @@ public class ModuloDTO implements Serializable {
 	
 	private Boolean	mensagemCompartilhada;
 
+	@NotEmpty(message="Preenchimento Obrigatório")
 	@Enumerated(EnumType.STRING)
 	private SimNaoType			controlaAcesso;
 

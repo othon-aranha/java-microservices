@@ -3,19 +3,22 @@ package acesso.tse.jus.br.entity;
 import java.io.Serializable;
 import java.util.Set;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 //import br.net.woodstock.rockframework.domain.persistence.AbstractIntegerEntity;
@@ -71,8 +74,8 @@ public class Usuario implements Serializable  {
 	@Enumerated(EnumType.ORDINAL)
 	private TipoUsuario			tipo;
 	
-	//@ManyToMany(mappedBy = "usuarios", fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH })
-	//private Set<Modulo>			usuarioModulos;
+	@ManyToMany(mappedBy = "usuarios", fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH })
+	private Set<Modulo>			usuarioModulos;
 	
 
 	/*
@@ -99,7 +102,7 @@ public class Usuario implements Serializable  {
 	}
 
 	
-	public Usuario(Integer id, String login, String nome, String matriculaServidor, String matriculaFuncionario,
+	/*public Usuario(Integer id, String login, String nome, String matriculaServidor, String matriculaFuncionario,
 			String email, String senha, String numeroCpf, StatusUsuario status, TipoUsuario tipo, Unidade unidade,
 			Set<UsuarioArea> areas, Set<Area> gerenteAreas, Set<Modulo> gerenteModulos, Set<Modulo> usuarioModulos) {
 		super();
@@ -113,7 +116,26 @@ public class Usuario implements Serializable  {
 		this.numeroCpf = numeroCpf;
 		this.status = status;
 		this.tipo = tipo;		
+	}*/
+	
+	public Usuario(Integer id, String login, String nome, String matriculaServidor, String matriculaFuncionario,
+			String email, String senha, String numeroCpf, StatusUsuario status, TipoUsuario tipo
+			,Set<Modulo> usuarioModulos
+			) {
+		super();
+		this.id = id;
+		this.login = login;
+		this.nome = nome;
+		this.matriculaServidor = matriculaServidor;
+		this.matriculaFuncionario = matriculaFuncionario;
+		this.email = email;
+		this.senha = senha;
+		this.numeroCpf = numeroCpf;
+		this.status = status;
+		this.tipo = tipo;
+		this.usuarioModulos = usuarioModulos;
 	}
+
 
 
 	public Integer getId() {
@@ -197,16 +219,18 @@ public class Usuario implements Serializable  {
 		this.tipo = tipo;
 	}
 	
-	/*@JsonIgnore
+	 
+	@JsonIgnore
 	public Set<Modulo> getUsuarioModulos() {
 		return this.usuarioModulos;
 	}
+
 
 	public void setUsuarioModulos(final Set<Modulo> usuarioModulos) {
 		this.usuarioModulos = usuarioModulos;
 	}	
 
-	
+	/*
 	public Unidade getUnidade() {
 		return this.unidade;
 	}

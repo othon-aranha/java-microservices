@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 //import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -32,22 +33,24 @@ import acesso.tse.jus.br.dto.ModuloDTO;
 import acesso.tse.jus.br.entity.Modulo;
 import acesso.tse.jus.br.entity.SimNaoType;
 import acesso.tse.jus.br.entity.StatusModulo;
+import acesso.tse.jus.br.entity.TipoAtualizacao;
 import acesso.tse.jus.br.entity.TipoModulo;
 import acesso.tse.jus.br.impl.ModuloRepositoryCustomImpl;
-import acesso.tse.jus.br.entity.TipoAtualizacao;
 import acesso.tse.jus.br.repository.ModuloRepository;
 import acesso.tse.jus.br.resource.ModuloResource;
 
 
-
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200"}, methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:8100"}, methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
 @RequestMapping("/modulo")
 public class ModuloRestController {
 
 	@Autowired
-	ModuloRepository repository;	
+	ModuloRepository repository;
 	RestTemplate restTemplate;
+	
+	@Autowired
+	private Environment env;
 	
 	@LoadBalanced @Bean
 	RestTemplate restTemplate() {
@@ -61,11 +64,29 @@ public class ModuloRestController {
 		
 	}
 	
+	@RequestMapping("/")
+	public String home() {
+		// This is useful for debugging
+		// When having multiple instance of gallery service running at different ports.
+		// We load balance among them, and display which instance received the request.
+		return "Acesso Service - Modulo rodando em porta: " + env.getProperty("local.server.port");
+	}
+	
+	// -------- Admin Area --------
+	// This method should only be accessed by users with role of 'admin'
+	// We'll add the logic of role based auth later
+	@RequestMapping("/admin")
+	public String homeAdmin() {
+		return "Esta é a área de administração do serviço rodando na porta: " + env.getProperty("local.server.port");
+	}
+	
+
+	
 	@GetMapping("/modulos")
 	public ResponseEntity<List<ModuloResource>> getAll() {
 		return new ResponseEntity<>(assembler.toResources(repository.findAll()), HttpStatus.OK);
-	}	
-	
+	}
+		
 	@PostMapping("/modulos/filtrar")
 	public ResponseEntity<List<ModuloResource>> get(@RequestBody(required=true) String body) {
 		ModuloDTO modulo = new Gson().fromJson(body, ModuloDTO.class);
@@ -83,6 +104,7 @@ public class ModuloRestController {
 			return new ResponseEntity<>(assembler.toResource(modulo), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			//return new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Modulo.class.getName());
 		}
 	}
 	
@@ -102,7 +124,7 @@ public class ModuloRestController {
 	public ResponseEntity<ModuloResource> update(@PathVariable Integer id, @RequestBody Modulo modulo) {
 		Modulo pmodulo = repository.findOne(id); 
 		if ( pmodulo != null) {
-			modulo.setId(pmodulo.getId()); 
+			modulo.setId(pmodulo.getId());
 			pmodulo = repository.save(modulo);
 			return new ResponseEntity<>(assembler.toResource(pmodulo), HttpStatus.OK);
 		} else {
