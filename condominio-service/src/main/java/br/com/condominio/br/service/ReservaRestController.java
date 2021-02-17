@@ -62,7 +62,7 @@ public class ReservaRestController {
 	}
 	
 	@GetMapping("/anoMes/{anoMes}/local/{local}")
-	public ResponseEntity<List<ReservaResource>> findByanoMesAndlocal(@PathVariable String anoMes,@PathVariable Integer local) {
+	public ResponseEntity<List<ReservaResource>> findByanoMesAndlocal(@PathVariable String anoMes,@PathVariable List<Integer> local) {
 		return new ResponseEntity<>(assembler.toResources(repository.findByanoMesAndlocal(anoMes, local )), HttpStatus.OK);
 	}
 	
