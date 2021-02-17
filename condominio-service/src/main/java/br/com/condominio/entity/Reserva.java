@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import java.util.Date;
 import java.sql.Timestamp;
@@ -37,32 +38,38 @@ public class Reserva implements Serializable {
 	
 	@Column(name = "dt_reserva")
 	@NotNull
-	private Date	dtReserva;
+	@Size(min = 3, max = 24)
+	private String	dtReserva;
 	
 	@Column(name = "hr_ini_reserva")
 	@NotNull
-	private Timestamp	hrIniReserva;
+	@Size(min = 3, max = 24)
+	private String	hrIniReserva;
 
 	@Column(name = "hr_fim_reserva")
 	@NotNull
-	private Timestamp	hrFimReserva;	
+	@Size(min = 3, max = 24)
+	private String	hrFimReserva;	
 	  
 	@Column(name = "dt_solicitacao")
 	@NotNull
-	private Date	dtSolicitacao;
+	@Size(min = 3, max = 24)
+	private String	dtSolicitacao;
 
 	@Column(name = "dt_confirmacao")
-	private Date	dtConfirmacao;	
+	@Size(min = 3, max = 24)
+	private String	dtConfirmacao;	
 	
 	@Column(name = "dt_cancelamento")
-	private Date	dtCancelamento;	
+	@Size(min = 3, max = 24)
+	private String	dtCancelamento;	
 	
 	public Reserva() {
 		super();
 	}
 	
-	public Reserva(Integer id, Unidade unidadeReserva, Local localReserva, Date dtReserva, Timestamp hrIniReserva,
-			Timestamp hrFimReserva, Date dtSolicitacao, Date dtConfirmacao, Date dtCancelamento) {
+	public Reserva(Integer id, Unidade unidadeReserva, Local localReserva, String dtReserva, String hrIniReserva,
+			String hrFimReserva, String dtSolicitacao, String dtConfirmacao, String dtCancelamento) {
 		super();
 		this.id = id;
 		this.unidadeReserva = unidadeReserva;
@@ -106,58 +113,58 @@ public class Reserva implements Serializable {
 	}
 
 
-	public Date getDtReserva() {
+	public String getDtReserva() {
 		return dtReserva;
 	}
 
 
-	public void setDtReserva(Date dtReserva) {
+	public void setDtReserva(String dtReserva) {
 		this.dtReserva = dtReserva;
 	}
 
 
-	public Timestamp getHrIniReserva() {
+	public String getHrIniReserva() {
 		return hrIniReserva;
 	}
 
 
-	public void setHrIniReserva(Timestamp hrIniReserva) {
+	public void setHrIniReserva(String hrIniReserva) {
 		this.hrIniReserva = hrIniReserva;
 	}
 
 
-	public Timestamp getHrFimReserva() {
+	public String getHrFimReserva() {
 		return hrFimReserva;
 	}
 
 
-	public void setHrFimReserva(Timestamp hrFimReserva) {
+	public void setHrFimReserva(String hrFimReserva) {
 		this.hrFimReserva = hrFimReserva;
 	}
 
 
-	public Date getDtSolicitacao() {
+	public String getDtSolicitacao() {
 		return dtSolicitacao;
 	}
 
 
-	public void setDtSolicitacao(Date dtSolicitacao) {
+	public void setDtSolicitacao(String dtSolicitacao) {
 		this.dtSolicitacao = dtSolicitacao;
 	}	
 	
-	public Date getDtConfirmacao() {
+	public String getDtConfirmacao() {
 		return dtConfirmacao;
 	}
 
-	public void setDtConfirmacao(Date dtConfirmacao) {
+	public void setDtConfirmacao(String dtConfirmacao) {
 		this.dtConfirmacao = dtConfirmacao;
 	}
 
-	public Date getDtCancelamento() {
+	public String getDtCancelamento() {
 		return dtCancelamento;
 	}
 
-	public void setDtCancelamento(Date dtCancelamento) {
+	public void setDtCancelamento(String dtCancelamento) {
 		this.dtCancelamento = dtCancelamento;
 	}
 

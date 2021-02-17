@@ -61,6 +61,11 @@ public class ReservaRestController {
 		return new ResponseEntity<>(assembler.toResources(repository.findAll(pageable)), HttpStatus.OK);
 	}
 	
+	@GetMapping("/anoMes/{anoMes}/local/{local}")
+	public ResponseEntity<List<ReservaResource>> findByanoMesAndlocal(@PathVariable String anoMes,@PathVariable Integer local) {
+		return new ResponseEntity<>(assembler.toResources(repository.findByanoMesAndlocal(anoMes, local )), HttpStatus.OK);
+	}
+	
 	// @Transactional
 	@GetMapping("/{id}")
 	public ResponseEntity<ReservaResource> get(@PathVariable Integer id) {

@@ -1,5 +1,7 @@
 package br.com.condominio.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,5 +24,9 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
 	Reserva findOne(@Param("id") Integer id);	
 	
 	@Query("SELECT a FROM Reserva a")
-	Page<Reserva> findAll(Pageable pageable);		
+	Page<Reserva> findAll(Pageable pageable);
+	
+	@RestResource(path="/anoMes/{anoMes}/local/{local}")
+	@Query(value="SELECT r.* FROM  Reserva r WHERE strftime('%Y-%m', dt_reserva) = :anoMes AND r.local_reserva = :local", nativeQuery = true)
+	List<Reserva> findByanoMesAndlocal(@Param("AnoMes") String anoMes, @Param("local") Integer id);
 }

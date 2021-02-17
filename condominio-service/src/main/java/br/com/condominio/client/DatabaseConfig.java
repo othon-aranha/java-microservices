@@ -21,7 +21,7 @@ public class DatabaseConfig {
 	    final DriverManagerDataSource dataSource = new DriverManagerDataSource();
 	    // dataSource.setDriverClassName(env.getProperty("driverClassName"spring.datasource.));
 	    dataSource.setDriverClassName("org.sqlite.JDBC");//(env.getProperty("spring.datasource.driver-class-name"));
-	    dataSource.setUrl("jdbc:sqlite:D:\\Desenvolvimento\\Repositorios\\Ionic\\NoFood.Ionic\\src\\app\\db\\admcond.db");//(env.getProperty("spring.datasource.jdbc-url"));
+	    dataSource.setUrl("jdbc:sqlite:E:\\Desenvolvimento\\Repositorios\\Ionic\\condominio\\src\\app\\db\\admcond.db");//(env.getProperty("spring.datasource.jdbc-url"));
 	    dataSource.setUsername("");//(env.getProperty("spring.datasource.user"));
 	    dataSource.setPassword("");//(env.getProperty("spring.datasource.password"));
 	    return dataSource;
