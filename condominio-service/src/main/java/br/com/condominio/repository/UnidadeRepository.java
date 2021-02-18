@@ -21,6 +21,6 @@ public interface UnidadeRepository extends JpaRepository<Unidade, Integer> {
 	@Query("SELECT a FROM Unidade a where a.id = :id")
 	Unidade findOne(@Param("id") Integer id);	
 	
-	@Query("SELECT a FROM Unidade a")
+	@Query("SELECT a FROM Unidade a ORDER BY a.nrAp")
 	Page<Unidade> findAll(Pageable pageable);		
 }

@@ -43,12 +43,12 @@ public class Reserva implements Serializable {
 	
 	@Column(name = "hr_ini_reserva")
 	@NotNull
-	@Size(min = 3, max = 24)
+	@Size(min = 3, max = 29)
 	private String	hrIniReserva;
 
 	@Column(name = "hr_fim_reserva")
 	@NotNull
-	@Size(min = 3, max = 24)
+	@Size(min = 3, max = 29)
 	private String	hrFimReserva;	
 	  
 	@Column(name = "dt_solicitacao")

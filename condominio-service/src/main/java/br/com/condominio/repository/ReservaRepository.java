@@ -27,6 +27,6 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
 	Page<Reserva> findAll(Pageable pageable);
 	
 	@RestResource(path="/anoMes/{anoMes}/local/{local}")
-	@Query(value="SELECT r.* FROM  Reserva r WHERE strftime('%Y-%m', dt_reserva) = :anoMes AND r.local_reserva in :local", nativeQuery = true)
+	@Query(value="SELECT r.* FROM  Reserva r WHERE strftime('%Y-%m', dt_reserva) = :anoMes AND r.local_reserva in :local ORDER BY r.dt_reserva, r.local_reserva", nativeQuery = true)
 	List<Reserva> findByanoMesAndlocal(@Param("anoMes") String anoMes, @Param("local") List<Integer> id);
 }
