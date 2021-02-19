@@ -38,7 +38,7 @@ public class Reserva implements Serializable {
 	
 	@Column(name = "dt_reserva")
 	@NotNull
-	@Size(min = 3, max = 24)
+	@Size(min = 3, max = 29)
 	private String	dtReserva;
 	
 	@Column(name = "hr_ini_reserva")
@@ -56,20 +56,20 @@ public class Reserva implements Serializable {
 	@Size(min = 3, max = 24)
 	private String	dtSolicitacao;
 
-	@Column(name = "dt_confirmacao")
-	@Size(min = 3, max = 24)
+	@Column(name = "status_reserva")	
+	private Integer	statusReserva;	
+	
+	
+	@Column(name = "dt_conf_status")
 	private String	dtConfirmacao;	
-	
-	@Column(name = "dt_cancelamento")
-	@Size(min = 3, max = 24)
-	private String	dtCancelamento;	
-	
+		
 	public Reserva() {
 		super();
 	}
 	
+
 	public Reserva(Integer id, Unidade unidadeReserva, Local localReserva, String dtReserva, String hrIniReserva,
-			String hrFimReserva, String dtSolicitacao, String dtConfirmacao, String dtCancelamento) {
+			String hrFimReserva, String dtSolicitacao, Integer statusReserva, String dtConfirmacao) {
 		super();
 		this.id = id;
 		this.unidadeReserva = unidadeReserva;
@@ -78,13 +78,25 @@ public class Reserva implements Serializable {
 		this.hrIniReserva = hrIniReserva;
 		this.hrFimReserva = hrFimReserva;
 		this.dtSolicitacao = dtSolicitacao;
+		this.statusReserva = statusReserva;
 		this.dtConfirmacao = dtConfirmacao;
-		this.dtCancelamento = dtCancelamento;
 	}
+
+
 
 
 	public Integer getId() {
 		return id;
+	}
+
+
+	public Integer getStatusReserva() {
+		return statusReserva;
+	}
+
+
+	public void setStatusReserva(Integer statusReserva) {
+		this.statusReserva = statusReserva;
 	}
 
 
@@ -158,14 +170,6 @@ public class Reserva implements Serializable {
 
 	public void setDtConfirmacao(String dtConfirmacao) {
 		this.dtConfirmacao = dtConfirmacao;
-	}
-
-	public String getDtCancelamento() {
-		return dtCancelamento;
-	}
-
-	public void setDtCancelamento(String dtCancelamento) {
-		this.dtCancelamento = dtCancelamento;
 	}
 
 
