@@ -33,7 +33,7 @@ import br.com.condominio.repository.ReservaRepository;
 
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200","http://localhost:8100"}, methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
+@CrossOrigin(methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.POST, RequestMethod.DELETE})
 @RequestMapping("/reserva")
 public class ReservaRestController {
 
@@ -77,7 +77,7 @@ public class ReservaRestController {
 		}
 	}
 	
-	@Transactional
+	@Transactional(timeout = 100)
 	@PostMapping
 	public ResponseEntity<ReservaResource> create(@RequestBody Reserva reserva) {
 		reserva = repository.save(reserva);
@@ -88,7 +88,7 @@ public class ReservaRestController {
 		}
 	}
 	
-	@Transactional
+	@Transactional(timeout = 100)
 	@PutMapping("/{id}")
 	public ResponseEntity<ReservaResource> update(@PathVariable Integer id, @RequestBody Reserva reserva) {
 		Reserva preserva = repository.findOne(id); 
@@ -101,7 +101,7 @@ public class ReservaRestController {
 		}
 	}
 	
-	@Transactional
+	@Transactional(timeout = 100)
 	@DeleteMapping("/{id}")
 	public ResponseEntity<ReservaResource> delete(@PathVariable Integer id) {
 		Reserva reserva = repository.findOne(id);
